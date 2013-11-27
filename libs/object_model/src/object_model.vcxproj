@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseSym|Win32">
+      <Configuration>ReleaseSym</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E557E90C-C695-4A7B-B5A6-2F133AF88563}</ProjectGuid>
+    <RootNamespace>object_model</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSym|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSym|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.51106.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSym|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../..;C:\Lib\tbb21_20080605oss\include;$(ProjectDir)/../../../../cloneable;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../..;C:\Lib\tbb21_20080605oss\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat />
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSym|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../..;C:\Lib\tbb21_20080605oss\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\boost\object_model\builder.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\class.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\config.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\dereference.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\dictionary.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\exceptions.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\field.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\forward_declarations.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\handle.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\label.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\method.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\object.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\registry.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\storage.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\string.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\string_stream.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\system_traits.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\template_header.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\detail\allocator.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\detail\base_type.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\detail\class_base.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\detail\make_method.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\detail\method_pointer.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\detail\postfix.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\detail\prefix.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\type\builtins.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\type\modifiers.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\type\number.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\type\signature.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\type\specifier.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\type\traits.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\generic\base.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\generic\class.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\generic\method.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\generic\object.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\generic\registry.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\generic\storage.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\containers\list.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\containers\map.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\containers\set.hpp" />
+    <ClInclude Include="..\..\..\boost\object_model\containers\vector.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="generic\object.cpp" />
+    <ClCompile Include="..\test\basic_tests.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

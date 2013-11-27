@@ -1,0 +1,10 @@
+# tests for Boost.Monotonic
+
+import modules;
+
+test-suite monotonic_test:
+    [ run test_test.cpp ]
+    [ compile test_dupe.cpp ]
+	;
+
+# EOF

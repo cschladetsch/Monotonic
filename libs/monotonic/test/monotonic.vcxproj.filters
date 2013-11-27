@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="boost">
+      <UniqueIdentifier>{c086cf9e-67a4-412b-9f26-f2542afa5074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\monotonic">
+      <UniqueIdentifier>{0b999b68-b9bc-45f8-ab34-04ebe838f719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\monotonic\containers">
+      <UniqueIdentifier>{347ae56b-a23b-448d-95b6-643678d17a50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\monotonic\detail">
+      <UniqueIdentifier>{823e7472-dd82-4100-a683-671607a97a5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\utility">
+      <UniqueIdentifier>{fbee7a95-f4c5-4eee-939f-6de798c72d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\interprocess">
+      <UniqueIdentifier>{fc649bce-b400-49e4-84b9-2d4d9786e2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="doc">
+      <UniqueIdentifier>{921d9a90-9ad1-40ab-b17e-dcfa4b204514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="results">
+      <UniqueIdentifier>{abc1f634-48b2-4911-ba04-41f6193d4f37}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\boost\monotonic\allocator.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\allocator_base.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\config.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\exceptions.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\fixed_storage.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\forward_declarations.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\local.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\monotonic.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\reclaimable_storage.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\shared_allocator.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\shared_storage.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\stack.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\static_storage.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\storage.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\storage_base.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\thread_local_storage.hpp">
+      <Filter>boost\monotonic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\chain.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\deque.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\inline_clone_allocator.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\list.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\map.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\ptr_list.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\set.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\string.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\containers\vector.hpp">
+      <Filter>boost\monotonic\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\detail\construct.hpp">
+      <Filter>boost\monotonic\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\detail\container.hpp">
+      <Filter>boost\monotonic\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\detail\link.hpp">
+      <Filter>boost\monotonic\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\detail\pool.hpp">
+      <Filter>boost\monotonic\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\detail\postfix.hpp">
+      <Filter>boost\monotonic\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\monotonic\detail\prefix.hpp">
+      <Filter>boost\monotonic\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\utility\iter_range.hpp">
+      <Filter>boost\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\anonymous_shared_memory.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\creation_tags.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\errors.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\exceptions.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\file_mapping.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\interprocess_fwd.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_external_buffer.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_heap_memory.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_mapped_file.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_shared_memory.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_windows_shared_memory.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\mapped_region.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\offset_ptr.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\segment_manager.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\shared_memory_object.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\windows_shared_memory.hpp">
+      <Filter>boost\interprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="AllocatorTypes.h" />
+    <ClInclude Include="PoolResult.h" />
+    <ClInclude Include="TestPoolAlloc.h" />
+    <ClInclude Include="Tests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\doc\index.html">
+      <Filter>doc</Filter>
+    </None>
+    <None Include="..\..\..\..\Lib\boost_1_39_0\libs\monotonic\doc\monotonic.qbk">
+      <Filter>doc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="results\gcc.txt">
+      <Filter>results</Filter>
+    </Text>
+    <Text Include="results\msvc.txt">
+      <Filter>results</Filter>
+    </Text>
+    <Text Include="results\test_map_erase.txt">
+      <Filter>results</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="compare_memory_pool.cpp" />
+  </ItemGroup>
+</Project>

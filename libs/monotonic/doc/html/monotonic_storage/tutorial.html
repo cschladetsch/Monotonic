@@ -1,0 +1,417 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Tutorial</title>
+<link rel="stylesheet" href="../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="../index.html" title="Monotonic Storage 0.3">
+<link rel="up" href="../index.html" title="Monotonic Storage 0.3">
+<link rel="prev" href="change_log.html" title="Change Log">
+<link rel="next" href="containers.html" title="Containers">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../boost.png"></td>
+<td align="center"><a href="../../../index.html">Home</a></td>
+<td align="center"><a href="../libraries.html">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="change_log.html"><img src="../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="containers.html"><img src="../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" title="Tutorial">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="monotonic_storage.tutorial"></a><a class="link" href="tutorial.html" title="Tutorial"> Tutorial</a>
+</h2></div></div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="tutorial.html#monotonic_storage.tutorial.basic_usage">Basic Usage</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#monotonic_storage.tutorial.using_multiple_containers">Using
+      Multiple Containers</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#monotonic_storage.tutorial.using_regions">Using Regions</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#monotonic_storage.tutorial.stack">Stack</a></span></dt>
+</dl></div>
+<p>
+      This tutorial progresses through the basic usage of the library, demonstrating
+      how to use a monotonic allocator with STL containers, how to use monotonic
+      storage directly without an allocator, how to use regions and access tags,
+      and finally demonstrates the use of the supplied container library with stack-based
+      local storage.
+    </p>
+<div class="section" title="Basic Usage">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="monotonic_storage.tutorial.basic_usage"></a><a class="link" href="tutorial.html#monotonic_storage.tutorial.basic_usage" title="Basic Usage">Basic Usage</a>
+</h3></div></div></div>
+<p>
+        The following is a very quick introduction to <span class="bold"><strong>Boost.Monotonic</strong></span>:
+      </p>
+<p>
+        
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">monotonic</span><span class="special">/</span><span class="identifier">allocator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">;</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">list</span><span class="special">;</span>
+        <span class="keyword">for</span> <span class="special">(</span><span class="identifier">size_t</span> <span class="identifier">n</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">n</span> <span class="special">&lt;</span> <span class="number">1000</span><span class="special">;</span> <span class="special">++</span><span class="identifier">n</span><span class="special">)</span>
+            <span class="identifier">list</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">n</span><span class="special">);</span>
+    <span class="special">}</span>
+    <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">static_storage</span><span class="special">&lt;&gt;::</span><span class="identifier">release</span><span class="special">();</span>
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        Here we have created a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span></code>
+        using a monotonic allocator. While we add new elements to the list in the
+        for-loop, allocation is coming from storage in the default region with default
+        access. The first 32k of allocation will come from the BSS segment embedded
+        in the application image (the amount of such storage is configurable), then
+        once that local storage is exhausted, later allocation requests will be serviced
+        from the heap. Since de-allocation does nothing in a monotonic allocator,
+        we must manually release the resources once we are finished, as shown above.
+      </p>
+<p>
+        While this example is trivial, if you were to benchmark it against using
+        a default <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span></code> you will find that monotonic
+        allocation is much <a href="http://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/test/results/">faster</a>. In those tables, all factors are normalised. So a number less than one means this system is slower, and a number greater than one means this system is faster. The metric used for normalisation is in the <a href="https://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/test/results/">data</a>.
+      </p>
+<p>
+        This is one of the main reasons for using this library; to provide efficient
+        storage and allocation for temporary containers.
+      </p>
+<p>
+        We shall now move on to some more interesting examples, including how to
+        use multiple containers that share the same strorage, using regions, using
+        local stack-based storage, and dealing with threading issues.
+      </p>
+</div>
+<div class="section" title="Using Multiple Containers">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="monotonic_storage.tutorial.using_multiple_containers"></a><a class="link" href="tutorial.html#monotonic_storage.tutorial.using_multiple_containers" title="Using Multiple Containers">Using
+      Multiple Containers</a>
+</h3></div></div></div>
+<p>
+        In this example, we create a map of ints to vectors of ints, with each container
+        using a monotonic allocator:
+      </p>
+<p>
+        
+</p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Vector</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">Vector</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">less</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;,</span> <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="identifier">Vector</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Map</span><span class="special">;</span>
+    <span class="identifier">Map</span> <span class="identifier">map</span><span class="special">;</span>
+    <span class="keyword">for</span> <span class="special">(</span><span class="identifier">size_t</span> <span class="identifier">n</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">n</span> <span class="special">&lt;</span> <span class="number">10000</span><span class="special">;</span> <span class="special">++</span><span class="identifier">n</span><span class="special">)</span>
+    <span class="special">{</span>
+            <span class="identifier">map</span><span class="special">[</span><span class="identifier">rand</span><span class="special">()%</span><span class="number">100</span><span class="special">].</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">n</span><span class="special">);</span>
+    <span class="special">}</span>
+    <span class="special">}</span>
+    <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">static_storage</span><span class="special">&lt;&gt;::</span><span class="identifier">release</span><span class="special">();</span>
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
+<p>
+      </p>
+<p>
+        Again, storage will only ever increase, so we must release it after we have
+        finished using it.
+      </p>
+<p>
+        Benchmarking the performance of this against other allocation schemes[2]
+        show that monotonic allocation is extremely fast and efficient.
+      </p>
+<p>
+        The key point here is that you can use a <code class="computeroutput"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span></code>
+        anywhere that you would otherwise use a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span></code>
+        or any other STL-compliant custom allocator. Monotonic allocators of the
+        same type are effectively stateless, and may be default-constructed, used,
+        and discarded as needed.
+      </p>
+<p>
+        We will deal with stateful monotonic allocators that can use local stack-based
+        storage in a later section.
+      </p>
+</div>
+<div class="section" title="Using Regions">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="monotonic_storage.tutorial.using_regions"></a><a class="link" href="tutorial.html#monotonic_storage.tutorial.using_regions" title="Using Regions">Using Regions</a>
+</h3></div></div></div>
+<p>
+        While it can be useful to have one storage area for all allocations, at times
+        will will want to segment our memory usage into different <span class="emphasis"><em>regions</em></span>.
+        This is done by passing a user-supplied <span class="emphasis"><em>region tag type</em></span>
+        to the type signature of a <code class="computeroutput"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span></code>,
+        as shown here:
+      </p>
+<p>
+        
+</p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">my_region_A</span> <span class="special">{</span> <span class="special">};</span>
+<span class="keyword">struct</span> <span class="identifier">my_region_B</span> <span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">my_region_A</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">A_list</span><span class="special">;</span>
+        <span class="identifier">A_list</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">1</span><span class="special">);</span>
+        <span class="special">{</span>
+             <span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">my_region_B</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">B_list</span><span class="special">;</span>
+             <span class="identifier">B_list</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">2</span><span class="special">);</span>
+        <span class="special">}</span>
+        <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">static_storage</span><span class="special">&lt;</span><span class="identifier">my_region_B</span><span class="special">&gt;::</span><span class="identifier">release</span><span class="special">();</span>
+        <span class="identifier">A_list</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">3</span><span class="special">);</span>
+    <span class="special">}</span>
+    <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">static_storage</span><span class="special">&lt;</span><span class="identifier">my_region_A</span><span class="special">&gt;::</span><span class="identifier">release</span><span class="special">();</span>
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        Here, we have defined two storage regions, designated with the type-tags
+        <code class="computeroutput"><span class="identifier">my_region_A</span></code> and <code class="computeroutput"><span class="identifier">my_region_B</span></code>. These are passed as the second
+        type argument to a <code class="computeroutput"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span></code>
+        in order to segment out the storage used. These regions are independant of
+        each other; releasing storage for <code class="computeroutput"><span class="identifier">B_list</span></code>
+        does not effect the storage for <code class="computeroutput"><span class="identifier">A_list</span></code>.
+      </p>
+<p>
+        Using segmented storage systems helps with logical seperation of resource
+        usage amoung different sub-systems within an application. It also helps with
+        ensuring privacy when using local storage, as demonstrated below:
+      </p>
+<p>
+        
+</p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">System</span>
+<span class="special">{</span>
+    <span class="keyword">struct</span> <span class="identifier">region</span> <span class="special">{};</span>
+    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">Object</span><span class="special">,</span> <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="identifier">Object</span><span class="special">,</span> <span class="identifier">region</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Objects</span><span class="special">;</span>
+
+<span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">void</span> <span class="identifier">update</span><span class="special">()</span>
+    <span class="special">{</span>
+        <span class="special">{</span>
+            <span class="identifier">Objects</span> <span class="identifier">objects</span><span class="special">;</span>
+            <span class="identifier">GatherRelevant</span><span class="special">(</span><span class="identifier">objects</span><span class="special">);</span>
+            <span class="identifier">Process</span><span class="special">(</span><span class="identifier">objects</span><span class="special">);</span>
+            <span class="identifier">Update</span><span class="special">(</span><span class="identifier">objects</span><span class="special">);</span>
+        <span class="special">}</span>
+        <span class="comment">// reset storage, ready for next update
+</span>        <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">static_storage</span><span class="special">&lt;</span><span class="identifier">region</span><span class="special">&gt;::</span><span class="identifier">reset</span><span class="special">();</span>
+    <span class="special">}</span>
+<span class="special">};</span>
+</pre>
+<p>
+      </p>
+<p>
+        We have used a private region-tag <code class="computeroutput"><span class="identifier">region</span></code>
+        to guarantee that storage used by local containers such as <code class="computeroutput"><span class="identifier">Objects</span></code> is not shared with any other system.
+      </p>
+<p>
+        Note that this is a typical use-case for monotonic allocation, as it uses
+        a locally defined container which is populated, used and discarded regularly.
+      </p>
+</div>
+<div class="section" title="Stack">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="monotonic_storage.tutorial.stack"></a><a class="link" href="tutorial.html#monotonic_storage.tutorial.stack" title="Stack">Stack</a>
+</h3></div></div></div>
+<p>
+        While monotonic allocators use monotonic storage, we can also use this storage
+        directly and wherever we want efficient resource management. Using a <code class="computeroutput"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+        gives you a first-class C++ stack which you can use at will, pass as an argument
+        or return as a result
+        <sup>[<a name="id673387" href="#ftn.id673387" class="footnote">3</a>]</sup>
+        .
+      </p>
+<p>
+        The general usage pattern is:
+      </p>
+<p>
+        
+</p>
+<pre class="programlisting"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">stack</span><span class="special">&lt;</span><span class="identifier">Size</span><span class="special">&gt;</span> <span class="identifier">stack</span><span class="special">;</span>
+<span class="special">{</span>
+    <span class="identifier">T0</span> <span class="special">&amp;</span><span class="identifier">t0</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">.</span><span class="identifier">push</span><span class="special">&lt;</span><span class="identifier">T0</span><span class="special">&gt;(..</span><span class="identifier">args</span><span class="special">..);</span>
+    <span class="identifier">T1</span> <span class="special">&amp;</span><span class="identifier">t1</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">.</span><span class="identifier">push</span><span class="special">&lt;</span><span class="identifier">T1</span><span class="special">&gt;(..</span><span class="identifier">args</span><span class="special">..);</span>
+    <span class="special">....</span>
+    <span class="identifier">Tn</span> <span class="special">&amp;</span><span class="identifier">tn</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">.</span><span class="identifier">push</span><span class="special">&lt;</span><span class="identifier">Tn</span><span class="special">&gt;(..</span><span class="identifier">args</span><span class="special">..);</span>
+    
+    <span class="identifier">stack</span><span class="special">.</span><span class="identifier">pop</span><span class="special">();</span>
+    <span class="identifier">stack</span><span class="special">.</span><span class="identifier">pop</span><span class="special">();</span>
+    <span class="special">...</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        Objects are created in-place using <span class="emphasis"><em>emplace</em></span> semantics.
+        You just provide the type and construction arguments - your object will be
+        either on the stack or the heap and you needn't worry either way. Objects
+        are <span class="emphasis"><em>not</em></span> copied, which means you can safely use types
+        that do not have default constructors or assignment overloads with <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>.
+      </p>
+<p>
+        All objects pushed onto the <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code> are destroyed when the stack leaves
+        scope - there is no need to pop them all explicitly. New objects can be added
+        between <code class="computeroutput"><span class="identifier">push</span></code> and <code class="computeroutput"><span class="identifier">pop</span></code>.
+      </p>
+<p>
+        You can set the amount of C++ machine stack to use by saying <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;</span><span class="identifier">num_bytes</span><span class="special">&gt;</span></code>.The
+        default inline size of a <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code> object is defined as <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">DefaltSizes</span><span class="special">::</span><span class="identifier">InlineSize</span></code>.
+      </p>
+<p>
+        We can use a <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+        as a platform-independant <code class="computeroutput"><span class="identifier">alloca</span><span class="special">(</span><span class="identifier">size</span><span class="special">)</span></code>
+        by pushing an array of bytes, by using <code class="computeroutput"><span class="identifier">stack</span><span class="special">.</span><span class="identifier">push</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="special">[</span><span class="identifier">N</span><span class="special">]&gt;</span></code> or <code class="computeroutput"><span class="identifier">stack</span><span class="special">.</span><span class="identifier">push</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">array</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span> <span class="special">&gt;</span></code>
+        or more generally <code class="computeroutput"><span class="identifier">stack</span><span class="special">.</span><span class="identifier">push_array</span><span class="special">&lt;</span><span class="identifier">Ty</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span></code>.
+      </p>
+<p>
+        When we call <code class="computeroutput"><span class="identifier">stack</span><span class="special">.</span><span class="identifier">pop</span><span class="special">()</span></code>,
+        the last value added to the stack is destroyed and the stack pointer is set
+        to the end of the previous object on the stack. Objects are added using correct
+        machine alignment. Calling <code class="computeroutput"><span class="identifier">pop</span></code>
+        on an empty stack throws an <code class="computeroutput"><span class="identifier">empty_stack</span></code>
+        exception.
+      </p>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../doc/html/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          It is best practise to open a new statement block before using a <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+          object. This ensures that the objects on the <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code> still have storage when when they
+          are automatically deleted
+        </p></td></tr>
+</table></div>
+<p>
+        We can also iterate over the stack, get the stack size, and clear the stack:
+      </p>
+<p>
+        
+</p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">stack</span><span class="special">&lt;&gt;</span> <span class="identifier">Stack</span><span class="special">;</span>
+<span class="identifier">Stack</span> <span class="identifier">stack</span><span class="special">;</span>
+<span class="special">{</span>
+    <span class="special">...</span> <span class="identifier">add</span> <span class="identifier">objects</span> <span class="identifier">to</span> <span class="identifier">the</span> <span class="identifier">stack</span> <span class="special">...</span>
+    
+    <span class="identifier">array</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="number">1000</span><span class="special">&gt;</span> <span class="special">&amp;</span><span class="identifier">bytes</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">.</span><span class="identifier">push_array</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="number">1000</span><span class="special">&gt;();</span>
+    
+    <span class="comment">// number of elements on the stack
+</span>    <span class="identifier">size_t</span> <span class="identifier">size</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">.</span><span class="identifier">size</span><span class="special">();</span>
+    
+    <span class="comment">// number of bytes used
+</span>    <span class="identifier">size_t</span> <span class="identifier">used_bytes</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">.</span><span class="identifier">bytes_used</span><span class="special">();</span>
+    
+    <span class="comment">// iterate over heterogenous elements
+</span>    <span class="identifier">Stack</span><span class="special">::</span><span class="identifier">const_iterator</span> <span class="identifier">elem</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">end</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">.</span><span class="identifier">end</span><span class="special">();</span>
+    <span class="keyword">for</span> <span class="special">(;</span> <span class="identifier">elem</span> <span class="special">!=</span> <span class="identifier">end</span><span class="special">;</span> <span class="special">++</span><span class="identifier">elem</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">elem</span><span class="special">-&gt;</span><span class="identifier">get_type</span><span class="special">().</span><span class="identifier">name</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+        <span class="keyword">if</span> <span class="special">(</span><span class="identifier">elem</span><span class="special">-&gt;</span><span class="identifier">is_type</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;())</span>
+        <span class="special">{</span>
+            <span class="keyword">int</span> <span class="identifier">num</span> <span class="special">=</span> <span class="identifier">elem</span><span class="special">-&gt;</span><span class="identifier">get</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;();</span>
+            <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">num</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+        <span class="special">}</span>
+    <span class="special">}</span>
+    
+    <span class="comment">// stacks are first-class objects and can be copied, passed
+</span>    <span class="comment">// as arguments and returned as results
+</span>    <span class="identifier">Stack</span> <span class="identifier">copy</span> <span class="special">=</span> <span class="identifier">stack</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        <code class="computeroutput"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+        is just like your very own C++ stack which you can share between objects
+        and functions and even across process boundaries, independantly of the underlying
+        machine-based stack. They can be copied and compared and iterated over.
+      </p>
+<div class="warning" title="Warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/html/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Copying <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+          objects performs a slicing copy. To safely copy general stacks, use <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">cloneable</span><span class="special">::</span><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+          <sup>[<a name="id674560" href="#ftn.id674560" class="footnote">4</a>]</sup>
+          instead
+        </p></td></tr>
+</table></div>
+<p>
+        Unlike the C++ stack, storage for a <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code> will use the heap when its local
+        inline stack-based buffer is exhuasted. This makes it ideal for local buffers
+        that will generally be small enough to fit onto the stack, but with the fallback
+        safety of transparently using the heap to service later requests for the
+        cases where that inline buffer is not large enough. This is especially useful
+        in recursive functions, which can be readily re-written to use a <code class="computeroutput"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+        and thus be divorced from the limitations of the C++ stack.
+      </p>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../doc/html/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          When a <code class="computeroutput"><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+          goes out of scope, all objects in that stack are destroyed
+        </p></td></tr>
+</table></div>
+<p>
+        You can use <code class="computeroutput"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">enter</span></code> to localise usage of a stack:
+      </p>
+<p>
+        
+</p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Stack</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">UseStack</span><span class="special">(</span><span class="identifier">Stack</span> <span class="special">&amp;</span><span class="identifier">stack</span><span class="special">)</span>
+<span class="special">{</span>
+	<span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">enter</span> <span class="identifier">local</span><span class="special">(</span><span class="identifier">stack</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        This ensures that the stack leaves in the same state that it entered, by
+        <code class="computeroutput"><span class="identifier">pop</span></code>ping until the stack is
+        balanced. If the stack is smaller when <code class="computeroutput"><span class="identifier">local</span></code>
+        leaves scope than when it entered scope, it will throw <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">uneven_stack</span></code>.
+      </p>
+</div>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a name="ftn.id673387" href="#id673387" class="para">3</a>] </sup>
+            To avoid slicing copies, use Boost.Cloneable.Stack
+          </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.id674560" href="#id674560" class="para">4</a>] </sup>
+              TODO
+            </p></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2009 Christian Schladetsch<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="change_log.html"><img src="../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="containers.html"><img src="../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

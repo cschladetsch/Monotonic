@@ -1,0 +1,14 @@
+project boost/monotonic/doc ;
+
+import boostbook : boostbook ;
+#//using quickbook ;
+
+#//xml monotonic : monotonic.qbk ;
+
+#path-constant images : ../../../doc/html ;
+path-constant images : . ;
+
+boostbook standalone
+    :
+        monotonic.xml
+    ;

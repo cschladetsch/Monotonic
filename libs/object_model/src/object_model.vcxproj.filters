@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="boost">
+      <UniqueIdentifier>{4a629b06-8b27-42f1-abb6-5130b43d6cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\object_model">
+      <UniqueIdentifier>{617fc6db-3426-424c-910b-d52cac95293c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\object_model\detail">
+      <UniqueIdentifier>{ecd7aff8-0495-4d95-ac7e-c0d52fe30f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\object_model\type">
+      <UniqueIdentifier>{2d88aba6-0791-4606-839b-f2af947b8f90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\object_model\generic">
+      <UniqueIdentifier>{67d2f8cc-79b1-4fef-b3c7-cd53e7bb7453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost\object_model\containers">
+      <UniqueIdentifier>{aa76cc85-8947-4c7c-b62c-a72eef2ffdb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{944d6d12-a6c3-4799-aa7a-cd5cf2aaf9d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\generic">
+      <UniqueIdentifier>{7b7956c3-0059-489e-8b65-002c27527ff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="doc">
+      <UniqueIdentifier>{899babc1-35d3-440b-94b6-66641d248f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{5099c0b0-e7ad-42bf-8cb4-28d9baa3949f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\boost\object_model\builder.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\class.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\config.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\dereference.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\dictionary.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\exceptions.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\field.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\forward_declarations.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\handle.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\label.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\method.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\object.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\registry.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\storage.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\string.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\string_stream.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\system_traits.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\template_header.hpp">
+      <Filter>boost\object_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\detail\allocator.hpp">
+      <Filter>boost\object_model\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\detail\base_type.hpp">
+      <Filter>boost\object_model\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\detail\class_base.hpp">
+      <Filter>boost\object_model\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\detail\make_method.hpp">
+      <Filter>boost\object_model\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\detail\method_pointer.hpp">
+      <Filter>boost\object_model\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\detail\postfix.hpp">
+      <Filter>boost\object_model\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\detail\prefix.hpp">
+      <Filter>boost\object_model\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\type\builtins.hpp">
+      <Filter>boost\object_model\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\type\modifiers.hpp">
+      <Filter>boost\object_model\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\type\number.hpp">
+      <Filter>boost\object_model\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\type\signature.hpp">
+      <Filter>boost\object_model\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\type\specifier.hpp">
+      <Filter>boost\object_model\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\type\traits.hpp">
+      <Filter>boost\object_model\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\generic\base.hpp">
+      <Filter>boost\object_model\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\generic\class.hpp">
+      <Filter>boost\object_model\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\generic\method.hpp">
+      <Filter>boost\object_model\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\generic\object.hpp">
+      <Filter>boost\object_model\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\generic\registry.hpp">
+      <Filter>boost\object_model\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\generic\storage.hpp">
+      <Filter>boost\object_model\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\containers\list.hpp">
+      <Filter>boost\object_model\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\containers\map.hpp">
+      <Filter>boost\object_model\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\containers\set.hpp">
+      <Filter>boost\object_model\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\boost\object_model\containers\vector.hpp">
+      <Filter>boost\object_model\containers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="generic\object.cpp">
+      <Filter>src\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\test\basic_tests.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

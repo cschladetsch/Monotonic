@@ -1,0 +1,133 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Monotonic Storage 0.3</title>
+<link rel="stylesheet" href="boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Monotonic Storage 0.3">
+<link rel="next" href="monotonic_storage/change_log.html" title="Change Log">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../boost.png"></td>
+<td align="center"><a href="../../index.html">Home</a></td>
+<td align="center"><a href="libraries.html">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="monotonic_storage/change_log.html"><img src="../../doc/html/images/next.png" alt="Next"></a></div>
+<div class="article" title="Monotonic Storage 0.3">
+<div class="titlepage">
+<div>
+<div><h2 class="title">
+<a name="monotonic_storage"></a>Monotonic Storage 0.3</h2></div>
+<div><div class="authorgroup"><div class="author"><h3 class="author">
+<span class="firstname">Christian</span> <span class="surname">Schladetsch</span>
+</h3></div></div></div>
+<div><p class="copyright">Copyright © 2009 Christian Schladetsch</p></div>
+<div><div class="legalnotice" title="Legal Notice">
+<a name="id668376"></a><p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></div>
+</div>
+<hr>
+</div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="section"><a href="index.html#monotonic_storage.intro"> Introduction</a></span></dt>
+<dt><span class="section"><a href="monotonic_storage/change_log.html"> Change Log</a></span></dt>
+<dt><span class="section"><a href="monotonic_storage/tutorial.html"> Tutorial</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="monotonic_storage/tutorial.html#monotonic_storage.tutorial.basic_usage">Basic Usage</a></span></dt>
+<dt><span class="section"><a href="monotonic_storage/tutorial.html#monotonic_storage.tutorial.using_multiple_containers">Using
+      Multiple Containers</a></span></dt>
+<dt><span class="section"><a href="monotonic_storage/tutorial.html#monotonic_storage.tutorial.using_regions">Using Regions</a></span></dt>
+<dt><span class="section"><a href="monotonic_storage/tutorial.html#monotonic_storage.tutorial.stack">Stack</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="monotonic_storage/containers.html">Containers</a></span></dt>
+<dd><dl><dt><span class="section"><a href="monotonic_storage/containers.html#monotonic_storage.containers.chain">Chain</a></span></dt></dl></dd>
+</dl>
+</div>
+<div class="section" title="Introduction">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="monotonic_storage.intro"></a><a class="link" href="index.html#monotonic_storage.intro" title="Introduction"> Introduction</a>
+</h2></div></div></div>
+<p>
+      The <span class="bold"><strong>Boost.Monotonic</strong></span> library provides storage,
+      allocation and container types for use in high-performance and real-time applications. The source code is available in the boost SVN repository <a href="http://svn.boost.org/svn/boost/sandbox/monotonic/boost">here</a>.
+    </p>
+<p>
+      The library provides a means for allocation to come from the BSS, stack, or
+      the heap, or transparently from a combination of the BSS, stack and heap. Allocation
+      is fast, because de-allocation does nothing
+      <sup>[<a name="id668417" href="#ftn.id668417" class="footnote">1</a>]</sup>
+      . As such, the amount of storage used by a monotonic allocator can only ever
+      increase - hence the name of the library. A LIFO allocation model is also provided.
+    </p>
+<p>
+      Allocation can be <span class="emphasis"><em>regionalised</em></span> by application of user-supplied
+      'tag types' to specify a logical storage region. A second tag may be used to
+      specify the <span class="emphasis"><em>access type</em></span> for the region - which can be
+      either global, guarded by a mutex, or using thread-local storage.
+    </p>
+<p>
+      <span class="bold"><strong>Boost.Monotonic</strong></span> is generally used where performace
+      is a key concern, but there are many use-cases where use of this library provides
+      new functionality
+      <sup>[<a name="id668461" href="#ftn.id668461" class="footnote">2</a>]</sup>
+      .
+    </p>
+<p>
+      By making deallocation a no-op, allocation of memory resources is extremely
+      fast. In general, the programmer is required to release storage used at an
+      appropriate time, however local scoping systems are provided by the library
+      for the most common use cases.
+    </p>
+<p>
+      Features include:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+        fast allocation from the stack
+      </li>
+<li class="listitem">
+        automatic extension to the heap as needed
+      </li>
+<li class="listitem">
+        storage can be segmented into independant regions
+      </li>
+<li class="listitem">
+        support for thread-safe storage, and thread-local storage
+      </li>
+<li class="listitem">
+        storage can be accessed directly, providing a 'first-class stack' system
+      </li>
+<li class="listitem">
+        containers that can use storage from the stack, from the heap, or both the
+        stack and the heap
+      </li>
+</ul></div>
+</div>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a name="ftn.id668417" href="#id668417" class="para">1</a>] </sup>
+          except for <code class="computeroutput"><span class="identifier">monotonic</span><span class="special">::</span><span class="identifier">stack</span><span class="special">&lt;&gt;</span></code>
+        </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.id668461" href="#id668461" class="para">2</a>] </sup>
+          such as in self- or mutually-recursive algorithms
+        </p></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"><p><small>Last revised: July 08, 2009 at 20:26:03 GMT</small></p></td>
+<td align="right"><div class="copyright-footer"></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="monotonic_storage/change_log.html"><img src="../../doc/html/images/next.png" alt="Next"></a></div>
+</body>
+</html>
