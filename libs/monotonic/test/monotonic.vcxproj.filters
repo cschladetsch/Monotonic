@@ -16,9 +16,6 @@
     <Filter Include="boost\utility">
       <UniqueIdentifier>{fbee7a95-f4c5-4eee-939f-6de798c72d9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="boost\interprocess">
-      <UniqueIdentifier>{fc649bce-b400-49e4-84b9-2d4d9786e2aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="doc">
       <UniqueIdentifier>{921d9a90-9ad1-40ab-b17e-dcfa4b204514}</UniqueIdentifier>
     </Filter>
@@ -122,54 +119,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\boost\utility\iter_range.hpp">
       <Filter>boost\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\anonymous_shared_memory.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\creation_tags.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\errors.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\exceptions.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\file_mapping.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\interprocess_fwd.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_external_buffer.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_heap_memory.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_mapped_file.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_shared_memory.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\managed_windows_shared_memory.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\mapped_region.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\offset_ptr.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\segment_manager.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\shared_memory_object.hpp">
-      <Filter>boost\interprocess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Lib\boost_1_39_0\boost\interprocess\windows_shared_memory.hpp">
-      <Filter>boost\interprocess</Filter>
     </ClInclude>
     <ClInclude Include="AllocatorTypes.h" />
     <ClInclude Include="PoolResult.h" />
