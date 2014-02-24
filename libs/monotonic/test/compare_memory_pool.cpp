@@ -1,5 +1,3 @@
-//#define TBB
-
 // (C) 2009 Christian Schladetsch
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -446,6 +444,7 @@ int main()
         // small-size (~100 elements) containers
         if (run_small)
         {
+			first_result = true;
             heading("SMALL");
             print(run_tests(1000, 100, 10, "string_cat", test_string_cat()));
             print(run_tests(5000, 100, 10, "list_string", test_list_string()));
@@ -466,6 +465,7 @@ int main()
         // medium-size (~1000 elements) containers
         if (run_medium)
         {
+			first_result = true;
             heading("MEDIUM");
             print(run_tests(1000, 1000, 10, "list_create<int>", test_list_create<int>()));
             print(run_tests(1000, 1000, 10, "list_sort<int>", test_list_sort<int>()));
@@ -483,6 +483,7 @@ int main()
         // large-size (~1000000 elements) containers
         if (run_large)
         {
+			first_result = true;
             heading("LARGE");
             print(run_tests(5, 25000, 10, "list_create<int>", test_list_create<int>()));
             print(run_tests(5, 100000, 10, "list_sort<int>", test_list_sort<int>()));
