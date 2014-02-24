@@ -105,6 +105,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
         result.mono_elapsed = timer.elapsed();
     }
 
+	// do it again for local storage if testing monotonic
     if (types.Includes(Type::Monotonic))
     {
         srand(42);
