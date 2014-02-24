@@ -149,7 +149,11 @@ std::pair<int, int> random_pair()
 }
 
 template <class Fun>
-PoolResults run_tests(size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic)
+PoolResults run_tests(
+	size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, 
+	Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic
+	| Type::Tbb
+	)
 {
     cout << title << ": reps=" << count << ", len=" << max_length << ", steps=" << num_iterations << endl;
     PoolResults results;
@@ -252,7 +256,7 @@ void print(PoolResults const &results)
             result_min.update_min(ratio);
             result_max.update_max(ratio);
         }
-        cout << ratio.fast_pool_elapsed << setw(w) << ratio.pool_elapsed << setw(w) << ratio.std_elapsed << setw(w) << ratio.tbb_elapsed  << setw(w) << ratio.mono_elapsed << endl;
+        cout << ratio.fast_pool_elapsed << setw(w) << ratio.pool_elapsed << setw(w) << ratio.std_elapsed << setw(w) << ratio.tbb_elapsed << endl;// << setw(w) << ratio.mono_elapsed << endl;
         results_vec.push_back(ratio);
         cumulative.push_back(ratio);
     }
@@ -263,6 +267,7 @@ void print(PoolResults const &results)
 
 void heading(const char *text, char star = '-')
 {
+	first_result = false;
     size_t len = 55;
     for (size_t n = 0; n < len; ++n)
         cout << star;
