@@ -58,8 +58,8 @@
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-    <IncludePath>C:\boost\boost_1_53_0;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\boost\boost_1_53_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\sdk\boost;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\sdk\boost\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>

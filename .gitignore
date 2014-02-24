@@ -11,3 +11,9 @@
 *.lai
 *.la
 *.a
+libs/monotonic/test/Tests/Debug/
+libs/monotonic/test/Debug/
+libs/monotonic/test/Backup1/
+libs/monotonic/test/UpgradeLog2.XML
+libs/monotonic/test/UpgradeLog2.htm
+libs/monotonic/test/monotonic.v11.suo

@@ -5,8 +5,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "monotonic", "monotonic.vcxp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "monotonic_tests", "Tests\Tests.vcxproj", "{D4779B0F-266B-46D3-8BCF-0E14EF8B817B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "object_model", "..\..\object_model\src\object_model.vcxproj", "{E557E90C-C695-4A7B-B5A6-2F133AF88563}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cloneable_tests", "..\..\..\..\cloneable\libs\cloneable\test\cloneable.vcproj", "{5FF650E3-53E2-447F-8D2D-A85B76B214D3}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{D4779B0F-266B-46D3-8BCF-0E14EF8B817B}.Release|Win32.ActiveCfg = Release|Win32
 		{D4779B0F-266B-46D3-8BCF-0E14EF8B817B}.ReleaseSym|Win32.ActiveCfg = ReleaseSym|Win32
 		{D4779B0F-266B-46D3-8BCF-0E14EF8B817B}.ReleaseSym|Win32.Build.0 = ReleaseSym|Win32
-		{E557E90C-C695-4A7B-B5A6-2F133AF88563}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E557E90C-C695-4A7B-B5A6-2F133AF88563}.Release|Win32.ActiveCfg = Release|Win32
-		{E557E90C-C695-4A7B-B5A6-2F133AF88563}.Release|Win32.Build.0 = Release|Win32
-		{E557E90C-C695-4A7B-B5A6-2F133AF88563}.ReleaseSym|Win32.ActiveCfg = ReleaseSym|Win32
 		{5FF650E3-53E2-447F-8D2D-A85B76B214D3}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5FF650E3-53E2-447F-8D2D-A85B76B214D3}.Release|Win32.ActiveCfg = Release|Win32
 		{5FF650E3-53E2-447F-8D2D-A85B76B214D3}.Release|Win32.Build.0 = Release|Win32
