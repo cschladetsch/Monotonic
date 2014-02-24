@@ -267,7 +267,6 @@ void print(PoolResults const &results)
 
 void heading(const char *text, char star = '-')
 {
-	first_result = false;
     size_t len = 55;
     for (size_t n = 0; n < len; ++n)
         cout << star;
