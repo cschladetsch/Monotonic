@@ -17,3 +17,9 @@ libs/monotonic/test/Backup1/
 libs/monotonic/test/UpgradeLog2.XML
 libs/monotonic/test/UpgradeLog2.htm
 libs/monotonic/test/monotonic.v11.suo
+libs/monotonic/test/ReleaseSym/
+libs/monotonic/test/Release/
+libs/monotonic/test/Tests/ReleaseSym/
+libs/monotonic/test/monotonic.opensdf
+libs/monotonic/test/monotonic.sdf
+libs/monotonic/test/monotonic.vcxproj.user
