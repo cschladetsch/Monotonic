@@ -64,10 +64,12 @@ namespace boost
                     : parent(&P), strand(S) { }
                 iterator_base(Chain &P, StrandIterators const &S, VectorIterators const &V)
                     : parent(&P), strand(S), vec(V) { }
+
                 Derived &This()
                 {
                     return static_cast<Derived &>(*this);
                 }
+
                 Derived &operator++()
                 {
                     if (!++vec)
@@ -76,58 +78,77 @@ namespace boost
                         {
                             return This();
                         }
+
                         vec = *strand;
                     }
+
                     return This();
                 }
+
                 Derived operator++(int)
                 {
                     Derived tmp = This();
                     ++*this;
                     return tmp;
                 }
+
                 bool operator==(iterator_base const &B) const
                 {
                     return parent == B.parent && strand == B.strand && vec == B.vec;
                 }
+
                 bool operator!=(iterator_base const &B) const
                 {
                     return !(*this == B);
                 }
             };
+
             struct iterator : iterator_base<Chain, StrandsIterators, VectorIterators, iterator>
             {
                 typedef iterator_base<Chain, StrandsIterators, VectorIterators, iterator> Parent;
+
                 iterator() { }
+
                 iterator(Chain &P)
                     : Parent(P) { }
+
                 iterator(Chain &P, StrandsIterators const &S)
                     : Parent(P, S) { }
+
                 iterator(Chain &P, StrandsIterators const &S, VectorIterators const &V)
                     : Parent(P, S, V) { }
+
                 T const &operator*() const
                 {
                     return *Parent::vec;
                 }
+
                 T &operator*()
                 {
                     return *Parent::vec;
                 }
             };
+
             typedef iterator Iter;
+
             struct const_iterator : iterator_base<Chain const, ConstStrandsIterators, ConstVectorIterators, const_iterator>
             {
                 typedef iterator_base<Chain const, ConstStrandsIterators, ConstVectorIterators, const_iterator> Parent;
+
                 const_iterator() { }
+
                 const_iterator(Chain const &P)
                     : Parent(P) { }
+
                 const_iterator(Iter const &X)
-                    : Parent(*X.parent, X.strand, X.vec)
-                { }
+                    : Parent(*X.parent, X.strand, X.vec) { }
+
                 const_iterator(Chain const &P, ConstStrandsIterators const &S)
                     : Parent(P, S) { }
+
                 const_iterator(Chain const &P, ConstStrandsIterators const &S, ConstVectorIterators const &V)
                     : Parent(P, S, V) { }
+
                 T const &operator*() const
                 {
                     return *Parent::vec;
@@ -136,23 +157,28 @@ namespace boost
 
         private:
             Allocator alloc;
+
             Strands strands;
 
         public:
             chain() { }
+
             chain(Allocator A)
                 : alloc(A), strands(A) { }
+
             chain(size_t len, Allocator A = Allocator())
                 : alloc(A), strands(A)
             {
                 // TODO
             }
+
             chain(size_t len, T const &X, Allocator A = Allocator())
                 : alloc(A), strands(A)
             {
                 strands.push_back(Vector(alloc));
                 strands.back().resize(len, X);
             }
+
             template <class II>
             chain(II F, II L, Allocator A = Allocator())
                 : alloc(A), strands(A)
@@ -161,6 +187,7 @@ namespace boost
                 Vector &vec = strands.back();
                 size_t len = std::distance(F,L);
                 vec.resize(len);
+
                 typename Vector::iterator G = vec.begin();
                 for (size_t N = 0; N < len; ++F, ++G)
                     *G = *F;
@@ -173,40 +200,48 @@ namespace boost
                 {
                     len += vec.size();
                 }
+
                 return len;
             }
+
             void clear()
             {
                 strands.clear();
             }
+
             bool empty() const
             {
                 return strands.empty() || size() == 0;
             }
+
             const_iterator begin() const
             {
                 if (strands.empty())
                     return const_iterator(*this);
                 return const_iterator(*this, strands, strands.front());
             }
+
             const_iterator end() const
             {
                 if (strands.empty())
                     return const_iterator(*this);
                 return const_iterator(*this, strands.end(), strands.back().end());
             }
+
             iterator begin()
             {
                 if (strands.empty())
                     return iterator(*this);
                 return iterator(*this, strands, strands.front());
             }
+
             iterator end()
             {
                 if (strands.empty())
                     return iterator(*this);
                 return iterator(*this, strands.end(), strands.back().end());
             }
+
             void push_back(T const &X)
             {
                 bool require_new_vec = strands.empty();
@@ -229,12 +264,15 @@ namespace boost
                     {
                         return vec.at(local);
                     }
+
                     offset += vec.size();
                     if (offset > index)
                         break;
                 }
+
                 throw std::out_of_range("chain");
             }
+
             T const &at(size_t index) const
             {
                 size_t offset = 0;
@@ -245,20 +283,25 @@ namespace boost
                     {
                         return vec.at(local);
                     }
+
                     offset += vec.size();
                     if (offset < index)
                         break;
                 }
+
                 throw std::out_of_range("chain");
             }
+
             T &operator[](size_t index)
             {
                 return at(index);
             }
+
             T const &operator[](size_t index) const
             {
                 return at(index);
             }
+
         };
 
 #ifdef WIN32
