@@ -212,10 +212,10 @@ struct test_list_string
     }
 };
 
-//Build a std::map of size n.  Loop for O(n^2) iterations.  
-//In each iteration insert one random element and lookup with lower_bound one random element and remove it.  
-//Precompute the random numbers and don't include the rand() calls in the time measurement of the benchmark.
-//http://tinyurl.com/mp6sub
+// Build a std::map of size n.  Loop for O(n^2) iterations.  
+// In each iteration insert one random element and lookup with lower_bound one random element and remove it.  
+// Precompute the random numbers and don't include the rand() calls in the time measurement of the benchmark.
+// http://tinyurl.com/mp6sub
 struct test_map_erase
 {
     template <class Alloc>
