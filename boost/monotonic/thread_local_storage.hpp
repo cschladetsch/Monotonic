@@ -6,7 +6,7 @@
 #ifndef BOOST_MONOTONIC_THREAD_LOCAL_STORAGE_HPP
 #define BOOST_MONOTONIC_THREAD_LOCAL_STORAGE_HPP
 
-#include <boost/thread.hpp>
+#include <boost/thread/thread.hpp>
 
 #include <boost/monotonic/detail/prefix.hpp>
 #include <boost/monotonic/storage.hpp>
