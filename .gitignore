@@ -3,6 +3,8 @@
 *.lo
 *.o
 
+Release/
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
