@@ -1,3 +1,4 @@
+#if 0
 // (C) 2009 Christian Schladetsch
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -511,3 +512,5 @@ int main()
 }
 
 //EOF
+#endif
+

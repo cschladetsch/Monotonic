@@ -580,6 +580,8 @@ BOOST_AUTO_TEST_CASE( test_copy )
     //BOOST_CHECK_EQUAL(rem1 - rem2, 12 + 100*sizeof(int));
 }
 
+#if 0
+
 BOOST_AUTO_TEST_CASE(test_shared_allocators)
 {
     monotonic::storage<> sa, sb;
@@ -611,6 +613,7 @@ BOOST_AUTO_TEST_CASE(test_shared_allocators)
         //BOOST_CHECK(l0 == l1);
     }
 }
+#endif
 
 BOOST_AUTO_TEST_CASE(test_basic)
 {

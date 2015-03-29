@@ -3,6 +3,7 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#if 0
 #ifndef BOOST_MONOTONIC_THREAD_LOCAL_STORAGE_HPP
 #define BOOST_MONOTONIC_THREAD_LOCAL_STORAGE_HPP
 
@@ -87,4 +88,6 @@ namespace boost
 #endif // BOOST_MONOTONIC_THREAD_LOCAL_STORAGE_HPP
 
 //EOF
+
+#endif //0
 
