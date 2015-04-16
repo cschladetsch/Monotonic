@@ -1,7 +1,7 @@
 Monotonic
 =========
 
-A boost library propsal: Fastest C++ Allocator.
+A boost library propsal: Fastest C++ Allocator. Original code here http://ci.boost.org/svn-trac/browser/sandbox/monotonic?rev=86799.
 
 This library provides the fastest way to manage memory in a C++ application. Yes, that is a bold claim. See the exhaustive results http://github.com/cschladetsch/Monotonic/tree/master/libs/monotonic/test/results/ 
 
