@@ -335,7 +335,7 @@ void test_pools()
             char *array2 = storage.allocate_bytes<1283>();
             fill_n(array2, 1283, 42);
 
-            array<Unaligned, 42> &array3 = storage.create<array<Unaligned, 42> >();
+            std::array<Unaligned, 42> &array3 = storage.create<std::array<Unaligned, 42> >();
 
             // destroy objects. this only calls the destructors; it does not release memory
             storage.destroy(s1);

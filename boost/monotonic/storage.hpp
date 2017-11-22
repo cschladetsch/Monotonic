@@ -6,8 +6,9 @@
 #ifndef BOOST_MONOTONIC_STORAGE_HPP
 #define BOOST_MONOTONIC_STORAGE_HPP
 
-#include <boost/foreach.hpp>
 #include <algorithm>
+#include <array>
+#include <boost/foreach.hpp>
 #include <boost/monotonic/detail/prefix.hpp>
 #include <boost/monotonic/fixed_storage.hpp>
 #include <boost/monotonic/detail/pool.hpp>
@@ -34,14 +35,17 @@ namespace boost
             typedef Alloc Allocator;
             typedef typename Allocator::template rebind<char>::other CharAllocator;
             typedef detail::Link<CharAllocator> Link;
+            typedef typename Allocator::template rebind<Link>::other LinkAllocator;
             typedef detail::Pool Pool;
             // allocations are always made from the stack, or from a pool the first link in the chain
-            typedef std::vector<Link, Alloc> Chain;                    
+            // typedef std::vector<Link, Alloc> Chain;                    
+            typedef std::vector<Link, LinkAllocator> Chain;                    
             typedef boost::array<Pool, NumPools> Pools;
             typedef fixed_storage<InlineSize> FixedStorage;    // the inline fixed-sized storage which may be on the stack
 
         private:
             FixedStorage fixed;    // the inline fixed-sized storage which may be on the stack
+
             Chain chain;                        // heap-based storage
             Allocator alloc;                    // allocator for heap-based storage
             Pools pools;                        // pools of same-sized chunks

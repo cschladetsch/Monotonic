@@ -65,13 +65,13 @@ namespace boost
             template <class Ty>
             Ty &create()
             {
-                return get_storage().create<Ty>();
+                return get_storage().template create<Ty>();
             }
 
             template <class Ty>
             Ty &create(Ty const &X)
             {
-                return get_storage().create<Ty>(X);
+                return get_storage().template create<Ty>(X);
             }
 
             template <class Ty>

@@ -26,3 +26,9 @@ libs/monotonic/test/monotonic.opensdf
 libs/monotonic/test/monotonic.sdf
 libs/monotonic/test/monotonic.vcxproj.user
 *.suo
+
+.DS_Store
+bin/
+build/
+
+
