@@ -30,5 +30,6 @@ libs/monotonic/test/monotonic.vcxproj.user
 .DS_Store
 bin/
 build/
+.vscode/
 
 

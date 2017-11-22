@@ -1,5 +1,4 @@
-Monotonic
-=========
+# Monotonic
 
 A boost library propsal: Fastest C++ Allocator. Original code here http://ci.boost.org/svn-trac/browser/sandbox/monotonic?rev=86799.
 
@@ -7,11 +6,18 @@ This library provides the fastest way to manage memory in a C++ application. Yes
 
 There are no source files - to add Monotonic functionality to your project, simply get latest and add the root folder to your include path.
 
-To use, see /libs/monotonic/test/monotonic.sln.
+## Building
 
-For performance analysis, see the monotonic project in the solution. 
+$ mkdir -p build && cmake .. && make
 
-For unit-tests, see the monotonic_tests project in the solution.
+## Running
 
-Tried and tested on Win7, Win8, Ubuntu and OS/X.
+$ bin/monotonic_test
+
+## Testing
+
+
+
+Tried and tested on Win7, Win8, Ubuntu and macOS.
+
 
