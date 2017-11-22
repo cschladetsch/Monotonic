@@ -1,5 +1,0 @@
-﻿  tests.cpp
-C:\Dev\Monotonic\libs\monotonic\test\Tests\/../../../..\boost/monotonic/detail/postfix.hpp(10): warning C4193: #pragma warning(pop) : no matching '#pragma warning(push)'
-  Generating code
-  Finished generating code
-  Tests.vcxproj -> C:\Dev\Monotonic\libs\monotonic\test\Release\monotonic_tests.exe
