@@ -58,12 +58,12 @@ namespace boost
                 VectorIterators vec;
 
                 iterator_base() { }
-                iterator_base(Chain &P)
-                    : parent(&P) { }
-                iterator_base(Chain &P, StrandIterators const &S)
-                    : parent(&P), strand(S) { }
-                iterator_base(Chain &P, StrandIterators const &S, VectorIterators const &V)
-                    : parent(&P), strand(S), vec(V) { }
+                iterator_base(Chain &p)
+                    : parent(&p) { }
+                iterator_base(Chain &p, StrandIterators const &s)
+                    : parent(&p), strand(s) { }
+                iterator_base(Chain &p, StrandIterators const &s, VectorIterators const &v)
+                    : parent(&p), strand(s), vec(v) { }
 
                 Derived &This()
                 {
