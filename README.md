@@ -16,6 +16,4 @@ There are no source files - to add Monotonic functionality to your project, simp
 
 ## Testing
 
-Tried and tested on Win7, Win8, Ubuntu and macOS.
-
-
+Tried and tested on Win7, Win8, Win10, Ubuntu and macOS.
