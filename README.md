@@ -12,7 +12,7 @@ There are no source files - to add Monotonic functionality to your project, simp
 
 ## Running
 
-```$ bin/monotonic_test``
+```$ bin/monotonic_test```
 
 ## Testing
 
