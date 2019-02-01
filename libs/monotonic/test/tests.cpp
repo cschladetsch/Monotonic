@@ -10,6 +10,7 @@
 //#define BOOST_TEST_MAIN
 
 #include <string>
+#include <iostream>
 #include <boost/monotonic/monotonic.hpp>
 
 #include <boost/monotonic/shared_allocator.hpp>
