@@ -1,7 +1,7 @@
 # Monotonic
 [![Build status](https://ci.appveyor.com/api/projects/status/github/cschladetsch/monotonic?svg=true)](https://ci.appveyor.com/project/cschladetsch/monotonic)
 [![CodeFactor](https://www.codefactor.io/repository/github/cschladetsch/monotonic/badge)](https://www.codefactor.io/repository/github/cschladetsch/monotonic)
-[![License](https://img.shields.io/github/license/cschladetsch/monotonic.svg?label=License&maxAge=86400)](./LICENSE)
+[![License](https://img.shields.io/github/license/cschladetsch/monotonic.svg?label=License&maxAge=86400)](./LICENSE.txt)
 [![Release](https://img.shields.io/github/release/cschladetsch/monotonic.svg?label=Release&maxAge=60)](https://github.com/cschladetsch/monotonic/releases/latest)
 
 **Build is 'failing' because it uses CMake and a *boost* installation. The code builds and runs and tests otherwise.**
