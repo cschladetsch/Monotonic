@@ -4,6 +4,8 @@
 [![License](https://img.shields.io/github/license/cschladetsch/monotonic.svg?label=License&maxAge=86400)](./LICENSE)
 [![Release](https://img.shields.io/github/release/cschladetsch/monotonic.svg?label=Release&maxAge=60)](https://github.com/cschladetsch/monotonic/releases/latest)
 
+**Build is 'failing' because it uses CMake and a *boost* installation. The code builds and runs and tests otherwise.**
+
 A boost library propsal: **Fastest C++ Allocator**. Original [code with documentation here](https://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/doc/html/index.html).
 
 This library provides the fastest way to manage memory in a C++ application. Yes, that is a bold claim. See the [exhaustive results]( http://github.com/cschladetsch/Monotonic/tree/master/libs/monotonic/test/results/). 
