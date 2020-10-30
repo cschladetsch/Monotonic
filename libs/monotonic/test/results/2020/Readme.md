@@ -4,6 +4,8 @@ All numbers are normalised by the time taken for Monotonic, so a number < 0 mean
 
 Monotonic is still the fastest allocator, by at least a factor of 4.
 
+The full results are listed [here](results.2020.txt).
+
 ## Environment
 
 Fast desktop, VS 2019 Community Release build.
