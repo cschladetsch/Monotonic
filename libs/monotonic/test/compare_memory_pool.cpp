@@ -1,4 +1,4 @@
-// Copyright (C) 2009-2020 Christian@Schladetsch.com
+// (C) 2009 Christian Schladetsch
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,22 +10,21 @@
 #include <iomanip> 
 #include <numeric>
 #include <algorithm>
-#include <math.h>
-
 #include <vector>
 #include <list>
 #include <map>
 #include <set>
 #include <bitset>
 #include <string>
-
-#include "./AllocatorTypes.h"
-#include "./PoolResult.h"
-#include "./Tests.h"
+#include <math.h>
 
 #include <boost/monotonic/containers/string.hpp>
 #include <boost/iterator.hpp>
 #include <boost/iterator/iterator_traits.hpp>
+
+#include "./AllocatorTypes.h"
+#include "./PoolResult.h"
+#include "./Tests.h"
 
 #ifdef WIN32
 //warning C4996: 'std::fill_n': Function call with parameters that may be unsafe
@@ -43,6 +42,12 @@ bool first_result = true;
 std::vector<int> random_numbers;
 std::vector<std::pair<int, int> > random_pairs;
 
+// ensure tests for different allocators get the same random number sequences
+void SeedRand()
+{
+    srand(42);
+}
+
 template <class Fun>
 PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
 {
@@ -57,7 +62,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
     typedef Allocator<Type::Tbb, int> tbb_alloc;
     if (types.Includes(Type::Tbb))
     {
-        srand(42);
+        SeedRand();
         boost::timer timer;
         for (size_t n = 0; n < count; ++n)
         {
@@ -71,7 +76,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
 
     if (types.Includes(Type::FastPool))
     {
-        srand(42);
+        SeedRand();
         boost::timer timer;
         for (size_t n = 0; n < count; ++n)
         {
@@ -87,7 +92,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
 
     if (types.Includes(Type::Pool))
     {
-        srand(42);
+        SeedRand();
         boost::timer timer;
         for (size_t n = 0; n < count; ++n)
         {
@@ -103,7 +108,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
 
     if (types.Includes(Type::Monotonic))
     {
-        srand(42);
+        SeedRand();
         boost::timer timer;
         for (size_t n = 0; n < count; ++n)
         {
@@ -115,10 +120,10 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
         result.mono_elapsed = timer.elapsed();
     }
 
-    // do it again for local storage if testing monotonic
+	// do it again for local storage if testing monotonic
     if (types.Includes(Type::Monotonic))
     {
-        srand(42);
+        SeedRand();
         monotonic::local<my_local> storage;
         boost::timer timer;
         for (size_t n = 0; n < count; ++n)
@@ -133,7 +138,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
 
     if (types.Includes(Type::Standard))
     {
-        srand(42);
+        SeedRand();
         boost::timer timer;
         for (size_t n = 0; n < count; ++n)
         {
@@ -155,14 +160,14 @@ std::pair<int, int> random_pair()
 
 template <class Fun>
 PoolResults run_tests(
-    size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, 
-    Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic
-    | Type::Tbb
-    )
+	size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, 
+	Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic
+	| Type::Tbb
+	)
 {
     cout << title << ": reps=" << count << ", len=" << max_length << ", steps=" << num_iterations << endl;
     PoolResults results;
-    srand(42);
+    SeedRand();
     boost::timer timer;
     for (size_t length = 10; length < max_length; length += max_length/num_iterations)
     {
@@ -197,7 +202,6 @@ std::pair<typename boost::iterator_value<II>::type,typename boost::iterator_valu
     typedef typename boost::iterator_value<II>::type Value;
     size_t length = std::distance(first, last);
     if (length == 0)
-        //throw std::range_error("standard_deviation_mean");
         return std::make_pair(Value(0), Value(0));
 
     Value mean = calc_mean(first, last, length);
@@ -207,6 +211,7 @@ std::pair<typename boost::iterator_value<II>::type,typename boost::iterator_valu
         Value val = *first - mean;
         std_dev += val*val;
     }
+
     std_dev = sqrt(std_dev*(1./length));
     return std::make_pair(std_dev, mean);
 }
@@ -222,10 +227,10 @@ void print_cumulative(std::vector<PoolResult> const &results)
     pair<PoolResult, PoolResult> dev_mean = standard_deviation_mean(results);
     size_t w = 10;
     cout << setw(w) << "scheme" << setw(w) << "mean" << setw(w) << "std-dev" << setw(w) << "min" << setw(w) << "max" << endl;
-    cout << setw(w) << "fast" << setprecision(6) << setw(w) << dev_mean.second.fast_pool_elapsed << setw(w) << dev_mean.first.fast_pool_elapsed << setw(w) << result_min.fast_pool_elapsed << setw(w) << result_max.fast_pool_elapsed << endl;
-    cout << setw(w) << "pool" << setprecision(6) << setw(w) << dev_mean.second.pool_elapsed << setw(w) << dev_mean.first.pool_elapsed << setw(w) << result_min.pool_elapsed << setw(w) << result_max.pool_elapsed << endl;
-    cout << setw(w) << "std" << setprecision(6) << setw(w) << dev_mean.second.std_elapsed << setw(w) << dev_mean.first.std_elapsed << setw(w) << result_min.std_elapsed << setw(w) << result_max.std_elapsed << endl;
-    cout << setw(w) << "tbb" << setprecision(6) << setw(w) << dev_mean.second.tbb_elapsed << setw(w) << dev_mean.first.tbb_elapsed << setw(w) << result_min.tbb_elapsed << setw(w) << result_max.tbb_elapsed << endl;
+    cout << setw(w) << "fast" << setprecision(3) << setw(w) << dev_mean.second.fast_pool_elapsed << setw(w) << dev_mean.first.fast_pool_elapsed << setw(w) << result_min.fast_pool_elapsed << setw(w) << result_max.fast_pool_elapsed << endl;
+    cout << setw(w) << "pool" << setprecision(3) << setw(w) << dev_mean.second.pool_elapsed << setw(w) << dev_mean.first.pool_elapsed << setw(w) << result_min.pool_elapsed << setw(w) << result_max.pool_elapsed << endl;
+    cout << setw(w) << "std" << setprecision(3) << setw(w) << dev_mean.second.std_elapsed << setw(w) << dev_mean.first.std_elapsed << setw(w) << result_min.std_elapsed << setw(w) << result_max.std_elapsed << endl;
+    cout << setw(w) << "tbb" << setprecision(3) << setw(w) << dev_mean.second.tbb_elapsed << setw(w) << dev_mean.first.tbb_elapsed << setw(w) << result_min.tbb_elapsed << setw(w) << result_max.tbb_elapsed << endl;
     cout << endl;
 }
 
@@ -235,7 +240,7 @@ void print(PoolResults const &results)
     cout << setw(4) << "len" << setw(w) << "fast/m" << setw(w) << "pool/m" << setw(w) << "std/m" << setw(w) << "tbb/m" << endl;//setw(w) << "tbb/l" << endl;
     cout << setw(0) << "--------------------------------------------" << endl;
     std::vector<PoolResult> results_vec;
-    BOOST_FOREACH(PoolResults::value_type const &iter, results)
+    for (const auto& iter : results)
     {
         PoolResult const &result = iter.second;
         cout << setw(4) << iter.first << setprecision(3) << setw(w);
@@ -261,6 +266,7 @@ void print(PoolResults const &results)
         results_vec.push_back(ratio);
         cumulative.push_back(ratio);
     }
+
     cout << endl;
     print_cumulative(results_vec);
     cout << endl << endl;
@@ -284,6 +290,7 @@ void test_locals(Storage &storage, size_t count)
 {
     if (count == 0)
         return;
+
     typedef typename Storage::template allocator<int>::type allocator;
     typedef typename Storage::template allocator<char>::type char_allocator;
     std::list<int, allocator > list;
@@ -316,16 +323,17 @@ void test_locals_mono()
     //cout << "test_locals: storage2 stack,heap =" << storage2.fixed_used() << ", " << storage2.heap_used() << endl;
 }
 
-
 void test_locals_std_impl(size_t count)
 {
     if (count == 0)
         return;
+
     std::list<int> list;
     fill_n(back_inserter(list), 100, 42);
     string s = "foo";
     for (size_t n = 0; n < 100; ++n)
         s += "bar";
+
     std::vector<int> vec;
     vec.resize(1000);
     test_locals_std_impl(--count);
@@ -346,19 +354,18 @@ void test_locals(size_t count)
     {
         test_locals_mono();
     }
-    double mono_elapsed = t0.elapsed();
 
+    double mono_elapsed = t0.elapsed();
     boost::timer t1;
     for (size_t n = 0; n < count; ++n)
     {
         test_locals_std();
     }
-    double std_elapsed = t1.elapsed();
 
+    double std_elapsed = t1.elapsed();
     cout << "mono: " << mono_elapsed << endl;
     cout << "std : " << std_elapsed << endl;
 }
-
 
 int main()
 {
@@ -378,7 +385,7 @@ int main()
         // small-size (~100 elements) containers
         if (run_small)
         {
-            first_result = true;
+			first_result = true;
             heading("SMALL");
             print(run_tests(1000, 100, 10, "string_cat", test_string_cat()));
             print(run_tests(5000, 100, 10, "list_string", test_list_string()));
@@ -399,7 +406,7 @@ int main()
         // medium-size (~1000 elements) containers
         if (run_medium)
         {
-            first_result = true;
+			first_result = true;
             heading("MEDIUM");
             print(run_tests(1000, 1000, 10, "list_create<int>", test_list_create<int>()));
             print(run_tests(1000, 1000, 10, "list_sort<int>", test_list_sort<int>()));
@@ -417,7 +424,7 @@ int main()
         // large-size (~1000000 elements) containers
         if (run_large)
         {
-            first_result = true;
+			first_result = true;
             heading("LARGE");
             print(run_tests(5, 25000, 10, "list_create<int>", test_list_create<int>()));
             print(run_tests(5, 100000, 10, "list_sort<int>", test_list_sort<int>()));
@@ -442,7 +449,4 @@ int main()
 
     return 0;
 }
-
-//EOF
-//#endif
 
