@@ -11,12 +11,32 @@ There are no source files - to add Monotonic functionality to your project, simp
 
 ## Building
 
-```$ mkdir -p build && cmake .. && make```
-
-## Running
-
-```$ bin/monotonic_test```
+```bash
+$ mkdir -p build && cmake .. && make
+```
 
 ## Testing
 
 Tried and tested on Win7, Win8, Win10, Ubuntu and macOS.
+
+## Results
+
+See all comparative results, going back to 2009, [here](/libs/monotonic/test/results).
+
+These are the latest results as of November 2020.
+
+All numbers are normalised by the time taken for Monotonic, so a number < 0 means faster, a number > 0 means slower by that factor.
+
+
+```
+*******************************************************
+                FINAL SUMMARY
+*******************************************************
+    scheme      mean   std-dev       min       max
+      fast   14.0359   49.7442         0   357.667
+      pool   36.5891   22687.1         1      1225
+       std   4.56216   4.24972       0.5         9
+```
+
+See the [comparison code](libs/monotonic/tests/compare_memory_pool.cpp) and the latest [results](libs/monotonic/tests/results/2020).
+
