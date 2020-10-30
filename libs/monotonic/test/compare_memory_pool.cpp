@@ -27,11 +27,21 @@
 #include <boost/iterator.hpp>
 #include <boost/iterator/iterator_traits.hpp>
 
+#ifdef WIN32
+//warning C4996: 'std::fill_n': Function call with parameters that may be unsafe
+#pragma warning(disable:4996)
+#endif
+
 using namespace std;
 using namespace boost;
 
-/// region tag for local storage used in run_test
 struct my_local {};
+
+std::vector<PoolResult> cumulative;
+PoolResult result_min, result_max;
+bool first_result = true;
+std::vector<int> random_numbers;
+std::vector<std::pair<int, int> > random_pairs;
 
 template <class Fun>
 PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
@@ -105,7 +115,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
         result.mono_elapsed = timer.elapsed();
     }
 
-	// do it again for local storage if testing monotonic
+    // do it again for local storage if testing monotonic
     if (types.Includes(Type::Monotonic))
     {
         srand(42);
@@ -138,10 +148,6 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
     return result;
 }
 
-// these are guaranteed to be at least length + length*length long
-std::vector<int> random_numbers;
-std::vector<std::pair<int, int> > random_pairs;
-
 std::pair<int, int> random_pair()
 {
     return make_pair(rand(), rand());
@@ -149,10 +155,10 @@ std::pair<int, int> random_pair()
 
 template <class Fun>
 PoolResults run_tests(
-	size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, 
-	Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic
-	| Type::Tbb
-	)
+    size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, 
+    Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic
+    | Type::Tbb
+    )
 {
     cout << title << ": reps=" << count << ", len=" << max_length << ", steps=" << num_iterations << endl;
     PoolResults results;
@@ -170,10 +176,6 @@ PoolResults run_tests(
     cout << endl << "took " << timer.elapsed() << "s" << endl;
     return results;
 }
-
-std::vector<PoolResult> cumulative;
-PoolResult result_min, result_max;
-bool first_result = true;
 
 template <class II>
 typename boost::iterator_value<II>::type calc_mean(II first, II last, size_t num)
@@ -196,7 +198,7 @@ std::pair<typename boost::iterator_value<II>::type,typename boost::iterator_valu
     size_t length = std::distance(first, last);
     if (length == 0)
         //throw std::range_error("standard_deviation_mean");
-		return std::make_pair(Value(0), Value(0));
+        return std::make_pair(Value(0), Value(0));
 
     Value mean = calc_mean(first, last, length);
     Value std_dev = 0;
@@ -269,81 +271,12 @@ void heading(const char *text, char star = '-')
     size_t len = 55;
     for (size_t n = 0; n < len; ++n)
         cout << star;
+
     cout << endl << "\t\t" << text << endl;
     for (size_t n = 0; n < len; ++n)
         cout << star;
+
     cout << endl;
-}
-
-#ifdef WIN32
-//warning C4996: 'std::fill_n': Function call with parameters that may be unsafe
-#pragma warning(disable:4996)
-#endif
-
-
-void test_pools()
-{
-    size_t length = 1;
-
-    {
-        boost::pool<> storage(sizeof(int));
-        for (size_t n = 0; n < length; ++n)
-        {
-            int *p = reinterpret_cast<int *>(storage.malloc());
-        }
-    }
-    {
-        boost::object_pool<int> storage;
-        for (size_t n = 0; n < length; ++n)
-        {
-            int *p = storage.malloc();
-        }
-    }
-
-    if (0)
-    {
-        boost::object_pool<string> storage;
-        for (size_t n = 0; n < length; ++n)
-        {
-            string *p = storage.malloc();
-        }
-        // crashes when storage is released?
-    }
-
-    {
-        length = 4;
-        // storage starts on the stack (in this case, 10k of it), then merges into the heap as needed
-        monotonic::storage<10*1024> storage;
-        for (size_t n = 0; n < length; ++n)
-        {
-            // create a new int from storage
-            int &n0 = storage.create<int>();
-
-            // create a new string (uses correct alignment)
-            string const &s1 = storage.create<string>("foo");
-            BOOST_ASSERT(s1 == "foo");
-
-            // allocate 37 bytes with alignment 1
-            char *array0 = storage.allocate_bytes(37);
-            fill_n(array0, 37, 42);
-
-            // allocate 2537 bytes with 64-byte alignment
-            char *array1 = storage.allocate_bytes(2537, 64);
-            fill_n(array1, 2537, 123);
-
-            // allocate 1283 bytes with machine alignment
-            char *array2 = storage.allocate_bytes<1283>();
-            fill_n(array2, 1283, 42);
-
-            std::array<Unaligned, 42> &array3 = storage.create<std::array<Unaligned, 42> >();
-
-            // destroy objects. this only calls the destructors; it does not release memory
-            storage.destroy(s1);
-
-            cout << "storage.fixed, heap, total used: " << storage.fixed_used() << ", " << storage.heap_used() << ", " << storage.used() << endl;
-        }
-        // storage is released. if this was only ever on the stack, no work is done
-    }
 }
 
 template <class Storage>
@@ -445,7 +378,7 @@ int main()
         // small-size (~100 elements) containers
         if (run_small)
         {
-			first_result = true;
+            first_result = true;
             heading("SMALL");
             print(run_tests(1000, 100, 10, "string_cat", test_string_cat()));
             print(run_tests(5000, 100, 10, "list_string", test_list_string()));
@@ -466,7 +399,7 @@ int main()
         // medium-size (~1000 elements) containers
         if (run_medium)
         {
-			first_result = true;
+            first_result = true;
             heading("MEDIUM");
             print(run_tests(1000, 1000, 10, "list_create<int>", test_list_create<int>()));
             print(run_tests(1000, 1000, 10, "list_sort<int>", test_list_sort<int>()));
@@ -484,7 +417,7 @@ int main()
         // large-size (~1000000 elements) containers
         if (run_large)
         {
-			first_result = true;
+            first_result = true;
             heading("LARGE");
             print(run_tests(5, 25000, 10, "list_create<int>", test_list_create<int>()));
             print(run_tests(5, 100000, 10, "list_sort<int>", test_list_sort<int>()));

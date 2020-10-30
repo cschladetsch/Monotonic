@@ -11,33 +11,33 @@
 
 namespace boost
 {
-	namespace heterogenous
-	{
-		/// an adaptor for an existing class
-		///
-		/// this is a type that can be used in an homogenous container
-		///
-		/// ...this may or may not be a good idea...
-		template <class T, class Base>//, class AbstractBase>
-		struct adaptor : T, cloneable<adaptor<T, Base/*, AbstractBase*/>, Base/*, AbstractBase*/>
-		{
-			adaptor() { }
+    namespace heterogenous
+    {
+        /// an adaptor for an existing class
+        ///
+        /// this is a type that can be used in an homogenous container
+        ///
+        /// ...this may or may not be a good idea...
+        template <class T, class Base>//, class AbstractBase>
+        struct adaptor : T, cloneable<adaptor<T, Base/*, AbstractBase*/>, Base/*, AbstractBase*/>
+        {
+            adaptor() { }
 
-			template <class A0>
-			adaptor(A0 a0) : T(a0)
-			{
-			}
-			template <class A0, class A1>
-			adaptor(A0 a0, A1 a1) : T(a0, a1)
-			{
-			}
-			template <class A0, class A1, class A2>
-			adaptor(A0 a0, A1 a1, A2 a2) : T(a0, a1, a2)
-			{
-			}
-		};
+            template <class A0>
+            adaptor(A0 a0) : T(a0)
+            {
+            }
+            template <class A0, class A1>
+            adaptor(A0 a0, A1 a1) : T(a0, a1)
+            {
+            }
+            template <class A0, class A1, class A2>
+            adaptor(A0 a0, A1 a1, A2 a2) : T(a0, a1, a2)
+            {
+            }
+        };
 
-	} // namespace heterogenous
+    } // namespace heterogenous
 
 } // namespace boost
 

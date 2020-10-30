@@ -12,57 +12,57 @@
 
 namespace boost
 {
-	namespace heterogenous
-	{
-		namespace detail
-		{
-			template <class U, class Alloc>
-			U *allocate(Alloc &al)
-			{
-				typename Alloc::template rebind<U>::other alloc(al);
-				return alloc.allocate(1);
-			}
+    namespace heterogenous
+    {
+        namespace detail
+        {
+            template <class U, class Alloc>
+            U *allocate(Alloc &al)
+            {
+                typename Alloc::template rebind<U>::other alloc(al);
+                return alloc.allocate(1);
+            }
 
-			// TODO: use variadic template arguments, or BOOST_PP
+            // TODO: use variadic template arguments, or BOOST_PP
 
-			template <class U, class Base, class Alloc>
-			pointer<U,Base> construct(Alloc &al)
-			{
-				typename Alloc::template rebind<U>::other alloc(al);
-				U *ptr = alloc.allocate(1);
-				alloc.construct(ptr);
-				return ptr;
-			}
+            template <class U, class Base, class Alloc>
+            pointer<U,Base> construct(Alloc &al)
+            {
+                typename Alloc::template rebind<U>::other alloc(al);
+                U *ptr = alloc.allocate(1);
+                alloc.construct(ptr);
+                return ptr;
+            }
 
-			template <class U, class Base, class Alloc, class A0>
-			pointer<U,Base> construct(Alloc &al, A0 a0)
-			{
-				U *ptr = allocate<U>(al);
-				new (ptr) U(a0);
-				return ptr;
-			}
+            template <class U, class Base, class Alloc, class A0>
+            pointer<U,Base> construct(Alloc &al, A0 a0)
+            {
+                U *ptr = allocate<U>(al);
+                new (ptr) U(a0);
+                return ptr;
+            }
 
-			template <class U, class Base, class Alloc, class A0, class A1>
-			pointer<U,Base> construct(Alloc &al, A0 a0, A1 a1)
-			{
-				U *ptr = allocate<U>(al);
-				new (ptr) U(a0, a1);
-				return ptr;
-			}
+            template <class U, class Base, class Alloc, class A0, class A1>
+            pointer<U,Base> construct(Alloc &al, A0 a0, A1 a1)
+            {
+                U *ptr = allocate<U>(al);
+                new (ptr) U(a0, a1);
+                return ptr;
+            }
 
-			template <class U, class Base, class Alloc, class A0, class A1, class A2>
-			pointer<U,Base> construct(Alloc &al, A0 a0, A1 a1, A2 a2)
-			{
-				U *ptr = allocate<U>(al);
-				new (ptr) U(a0, a1, a2);
-				return ptr;
-			}
+            template <class U, class Base, class Alloc, class A0, class A1, class A2>
+            pointer<U,Base> construct(Alloc &al, A0 a0, A1 a1, A2 a2)
+            {
+                U *ptr = allocate<U>(al);
+                new (ptr) U(a0, a1, a2);
+                return ptr;
+            }
 
-			// etc...
+            // etc...
 
-		} // namespace detail
+        } // namespace detail
 
-	} // namespace heterogenous
+    } // namespace heterogenous
 
 } // namespace boost
 

@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE(test_fixed_stack)
 
         size_t peak = stack.top();
         cout << "STACK:" << endl;
-		// CJS 2013
+        // CJS 2013
         //BOOST_FOREACH(typename monotonic::fixed_stack<>::value_type const &elem, stack)
         //{
         //    cout << elem.get_type().name() << endl;
@@ -393,7 +393,7 @@ BOOST_AUTO_TEST_CASE(test_chain)
     BOOST_ASSERT(deq0 != deq1);
 
     int sum = 0;
-	// CJS 2013
+    // CJS 2013
     //BOOST_FOREACH(int n, deq1)
     //    sum += n;
     //BOOST_CHECK(sum == 6);
