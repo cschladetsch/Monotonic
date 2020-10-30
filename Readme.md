@@ -38,5 +38,5 @@ All numbers are normalised by the time taken for Monotonic, so a number < 0 mean
        std   4.56216   4.24972       0.5         9
 ```
 
-See the [comparison code](libs/monotonic/tests/compare_memory_pool.cpp) and the latest [results](libs/monotonic/tests/results/2020).
+See the [comparison code](/libs/monotonic/test/compare_memory_pool.cpp) and the latest [results](/libs/monotonic/test/results/2020).
 
