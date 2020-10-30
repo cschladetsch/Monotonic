@@ -160,10 +160,9 @@ std::pair<int, int> random_pair()
 
 template <class Fun>
 PoolResults run_tests(
-	size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, 
-	Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic
-	| Type::Tbb
-	)
+    size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, 
+    Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic | Type::Tbb
+    )
 {
     cout << title << ": reps=" << count << ", len=" << max_length << ", steps=" << num_iterations << endl;
     PoolResults results;
@@ -230,14 +229,16 @@ void print_cumulative(std::vector<PoolResult> const &results)
     cout << setw(w) << "fast" << setprecision(3) << setw(w) << dev_mean.second.fast_pool_elapsed << setw(w) << dev_mean.first.fast_pool_elapsed << setw(w) << result_min.fast_pool_elapsed << setw(w) << result_max.fast_pool_elapsed << endl;
     cout << setw(w) << "pool" << setprecision(3) << setw(w) << dev_mean.second.pool_elapsed << setw(w) << dev_mean.first.pool_elapsed << setw(w) << result_min.pool_elapsed << setw(w) << result_max.pool_elapsed << endl;
     cout << setw(w) << "std" << setprecision(3) << setw(w) << dev_mean.second.std_elapsed << setw(w) << dev_mean.first.std_elapsed << setw(w) << result_min.std_elapsed << setw(w) << result_max.std_elapsed << endl;
+#ifdef BOOST_MONOTONIC_TBB
     cout << setw(w) << "tbb" << setprecision(3) << setw(w) << dev_mean.second.tbb_elapsed << setw(w) << dev_mean.first.tbb_elapsed << setw(w) << result_min.tbb_elapsed << setw(w) << result_max.tbb_elapsed << endl;
+#endif
     cout << endl;
 }
 
 void print(PoolResults const &results)
 {
     size_t w = 10;
-    cout << setw(4) << "len" << setw(w) << "fast/m" << setw(w) << "pool/m" << setw(w) << "std/m" << setw(w) << "tbb/m" << endl;//setw(w) << "tbb/l" << endl;
+    cout << setw(4) << "len" << setw(w) << "fast/m" << setw(w) << "pool/m" << setw(w) << "std/m" << setw(w) << "tbb/m" << endl;
     cout << setw(0) << "--------------------------------------------" << endl;
     std::vector<PoolResult> results_vec;
     for (const auto& iter : results)
@@ -262,7 +263,7 @@ void print(PoolResults const &results)
             result_min.update_min(ratio);
             result_max.update_max(ratio);
         }
-        cout << ratio.fast_pool_elapsed << setw(w) << ratio.pool_elapsed << setw(w) << ratio.std_elapsed << setw(w) << ratio.tbb_elapsed << endl;// << setw(w) << ratio.mono_elapsed << endl;
+        cout << ratio.fast_pool_elapsed << setw(w) << ratio.pool_elapsed << setw(w) << ratio.std_elapsed << setw(w) << ratio.tbb_elapsed << endl;
         results_vec.push_back(ratio);
         cumulative.push_back(ratio);
     }

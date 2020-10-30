@@ -8,7 +8,6 @@
 
 #pragma once
 
-// these are guaranteed to be at least length + length*length long
 extern std::vector<int> random_numbers;
 extern std::vector<std::pair<int, int> > random_pairs;
 
@@ -212,8 +211,8 @@ struct test_list_string
     }
 };
 
-// Build a std::map of size n.  Loop for O(n^2) iterations.  
-// In each iteration insert one random element and lookup with lower_bound one random element and remove it.  
+// Build a std::map of size length given an Allocator.
+// In each iteration insert one random element and lookup with lower_bound one random element and remove it.
 // Precompute the random numbers and don't include the rand() calls in the time measurement of the benchmark.
 // http://tinyurl.com/mp6sub
 struct test_map_erase
@@ -221,13 +220,11 @@ struct test_map_erase
     template <class Alloc>
     int test(Alloc alloc, size_t length) const
     {
-        typedef std::map<int
-            , int
-            , std::less<int>
-            , typename Rebind<Alloc, int>::type
-        > Map;
+        typedef std::map<int, int, std::less<int>, typename Rebind<Alloc, int>::type> Map;
+
         Map map;
         std::copy(random_pairs.begin(), random_pairs.begin() + length, inserter(map, map.begin()));
+
         size_t max_length = length*length;
         for (size_t n = 0; n < max_length; ++n)
         {
@@ -237,6 +234,7 @@ struct test_map_erase
             if (iter != map.end())
                 map.erase(iter);
         }
+
         return 0;
     }
 };
