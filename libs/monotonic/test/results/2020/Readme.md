@@ -1,6 +1,11 @@
 # Results 2020
 
-Standard lib beats monotonic for the first time. All numbers are normalised by the time taken for Monotonic, so a number < 0 means faster, a number > 0 means slower by that factor.
+All numbers are normalised by the time taken for Monotonic, so a number < 0 means faster, a number > 0 means slower by that factor.
+
+Monotonic is still the fastest allocator.
+
+## Environment
+Fast desktop, VS 2019 Community Release build.
 
 ```
 *******************************************************
@@ -13,4 +18,3 @@ Standard lib beats monotonic for the first time. All numbers are normalised by t
        tbb         0         0         0         0
 ```
 
-And by a good measure too. This was running in a virtual machine, so I will update after running natively.

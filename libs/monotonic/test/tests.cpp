@@ -9,6 +9,11 @@
 //#define BOOST_TEST_DYN_LINK
 //#define BOOST_TEST_MAIN
 
+#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_thread-vc142-mt-x64-1_73.lib")
+#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_date_time-vc142-mt-x64-1_73.lib")
+#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_chrono-vc142-mt-x64-1_73.lib")
+#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_unit_test_framework-vc142-mt-x64-1_73.lib")
+
 #include <string>
 #include <iostream>
 #include <boost/monotonic/monotonic.hpp>
