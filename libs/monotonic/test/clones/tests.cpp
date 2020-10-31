@@ -22,7 +22,7 @@
 
 #define BOOST_TEST_MODULE basic_test test
 #include <boost/test/unit_test.hpp>
-#include <boost/timer.hpp>
+#include <boost/timer/timer.hpp>
 
 using namespace std;
 using namespace boost;
