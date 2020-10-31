@@ -27,8 +27,13 @@
 #include "./Tests.h"
 
 #ifdef WIN32
+
 //warning C4996: 'std::fill_n': Function call with parameters that may be unsafe
 #pragma warning(disable:4996)
+
+//warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+#pragma warning(disable:4267)
+
 #endif
 
 using namespace std;

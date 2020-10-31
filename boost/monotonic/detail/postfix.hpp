@@ -6,7 +6,7 @@
 // warning C4193: #pragma warning(pop) : no matching '#pragma warning(push)'
 //#pragma warning(push: )
 
-#ifdef BOOST_MSVC
+#ifdef MSVC
 #    pragma warning(pop)
 #endif
 

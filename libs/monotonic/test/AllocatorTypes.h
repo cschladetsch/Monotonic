@@ -38,12 +38,11 @@ struct Type
     bool Includes(unsigned bit) const { return (flags & bit) != 0; }
     void Exclude(unsigned bit) { flags &= ~bit; }
     void Include(unsigned bit) { flags |= bit; }
-    std::string ToString() const;
 };
 
 struct Location
 {
-    enum { Heap, Stack };
+    enum { Bss, Heap, Stack };
 };
 
 template <size_t Num, class Ty>
@@ -78,7 +77,7 @@ struct Rebind
 
 struct Unaligned
 {
-    char c[5];
+    char c[5] = {};
     Unaligned() { }
     Unaligned(char C) 
     {
