@@ -6,9 +6,6 @@
 // documentation at https://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/doc/index.html
 // sandbox at https://svn.boost.org/svn/boost/sandbox/monotonic/
 
-//#define BOOST_TEST_DYN_LINK
-//#define BOOST_TEST_MAIN
-
 #pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_thread-vc142-mt-x64-1_73.lib")
 #pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_date_time-vc142-mt-x64-1_73.lib")
 #pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_chrono-vc142-mt-x64-1_73.lib")
@@ -16,8 +13,11 @@
 
 #include <string>
 #include <iostream>
-#include <boost/monotonic/monotonic.hpp>
 
+#include <boost/iterator.hpp>
+#include <boost/timer.hpp>
+
+#include <boost/monotonic/monotonic.hpp>
 #include <boost/monotonic/shared_allocator.hpp>
 #include <boost/monotonic/shared_storage.hpp>
 #include <boost/monotonic/thread_local_storage.hpp>
@@ -27,12 +27,22 @@
 #include <boost/interprocess/containers/list.hpp>
 #include <boost/monotonic/reclaimable_storage.hpp>
 #include <boost/monotonic/stack.hpp>
-#include <boost/iterator.hpp>
 
 #define BOOST_TEST_MODULE basic_test test
 #include <boost/test/unit_test.hpp>
-#include <boost/timer.hpp>
 
+#ifdef WIN32
+// warning C4996: 'std::fill_n': Function call with parameters that may be unsafe
+#pragma warning(disable:4996)
+#endif
+
+using namespace std;
+using namespace boost;
+
+using monotonic::heap_region_tag;
+
+struct num_tag;
+struct str_tag;
 
 template <class II>
 bool is_sorted(II F, II L)
@@ -51,19 +61,6 @@ bool is_sorted(Cont const &cont)
 {
     return std::is_sorted(boost::begin(cont), boost::end(cont));
 }
-
-using namespace std;
-using namespace boost;
-
-#ifdef WIN32
-// warning C4996: 'std::fill_n': Function call with parameters that may be unsafe
-#pragma warning(disable:4996)
-#endif
-
-using monotonic::heap_region_tag;
-
-struct num_tag;
-struct str_tag;
 
 struct Tracked
 {
