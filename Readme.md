@@ -19,7 +19,7 @@ From Command line
 
 ##### Windows
 ```
-b2 address-model=64 link=static threading=multi runtime-link=shared build-dir=build\x86 install --prefix="c:\lib\boost\" filesystem chrono regex
+b2 address-model=64 link=static threading=multi runtime-link=shared build-dir=build\x86 install --prefix="c:\lib\boost\" filesystem chrono regex threading
 ```
 
 ##### Ubuntu
