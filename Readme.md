@@ -11,6 +11,23 @@ There are no source files - to add Monotonic functionality to your project, simp
 
 ## Building
 
+### Building Boost Requirements
+
+First, build only the requirements:
+
+From Command line 
+
+##### Windows
+```
+b2 address-model=64 link=static threading=multi runtime-link=shared build-dir=build\x86 install --prefix="c:\lib\boost\" filesystem chrono regex
+```
+
+##### Ubuntu
+```
+# sudo apt-get intall libdev-boost-filesystem libdev-boost-chrono libdev-boost-regex
+```
+
+Then build the test and performance harnesses:
 ```bash
 $ mkdir -p build && cmake .. && make
 ```
@@ -26,7 +43,6 @@ See all comparative results, going back to 2009, [here](/libs/monotonic/test/res
 These are the latest results as of November 2020.
 
 All numbers are normalised by the time taken for Monotonic, so a number < 0 means faster, a number > 0 means slower by that factor.
-
 
 ```
 *******************************************************
