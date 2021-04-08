@@ -252,7 +252,8 @@ void print(PoolResults const &results)
             cout << setw(w) << "mono = 0s" << endl;
             continue;
         }
-        PoolResult ratio = result*(1./result.local_mono_elapsed);
+        PoolResult ratio = result;
+        ratio *= (1. / result.local_mono_elapsed);
         ratio.local_mono_elapsed = 1;
 
         if (first_result)

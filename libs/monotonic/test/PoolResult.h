@@ -10,16 +10,17 @@
 
 struct PoolResult 
 {
-    double pool_elapsed;
-    double fast_pool_elapsed;
-    double mono_elapsed;
-    double local_mono_elapsed;
-    double std_elapsed;
-    double tbb_elapsed;
+    typedef boost::timer::nanosecond_type nanoseconds;
+    nanoseconds pool_elapsed;
+    nanoseconds fast_pool_elapsed;
+    nanoseconds mono_elapsed;
+    nanoseconds local_mono_elapsed;
+    nanoseconds std_elapsed;
+    nanoseconds tbb_elapsed;
 
-    PoolResult(double D = 0)
+    PoolResult(nanoseconds d = 0)
     {
-        tbb_elapsed = pool_elapsed = fast_pool_elapsed = mono_elapsed = local_mono_elapsed = std_elapsed = D;
+        tbb_elapsed = pool_elapsed = fast_pool_elapsed = mono_elapsed = local_mono_elapsed = std_elapsed = d;
     }
 
     PoolResult& operator+=(PoolResult const &A)
@@ -55,14 +56,19 @@ struct PoolResult
         return *this;
     }
 
+    nanoseconds mul(nanoseconds ns, double x)
+    {
+        return (nanoseconds)(ns * x);
+    }
+
     PoolResult& operator*=(double A)
     {
-        pool_elapsed *= A;
-        fast_pool_elapsed *= A;
-        mono_elapsed *= A;
-        local_mono_elapsed *= A;
-        std_elapsed *= A;
-        tbb_elapsed *= A;
+        pool_elapsed = mul(pool_elapsed, A);
+        fast_pool_elapsed = mul(fast_pool_elapsed, A);
+        mono_elapsed = mul(mono_elapsed, A);
+        local_mono_elapsed = mul(local_mono_elapsed, A);
+        std_elapsed = mul(std_elapsed, A);
+        tbb_elapsed = mul(tbb_elapsed, A);
         return *this;
     }
 
@@ -90,11 +96,11 @@ struct PoolResult
 inline PoolResult sqrt(PoolResult const &A)
 {
     PoolResult R(A);
-    R.fast_pool_elapsed = sqrt(R.fast_pool_elapsed); 
-    R.mono_elapsed = sqrt(R.mono_elapsed); 
-    R.local_mono_elapsed = sqrt(R.local_mono_elapsed); 
-    R.std_elapsed = sqrt(R.std_elapsed); 
-    R.tbb_elapsed = sqrt(R.tbb_elapsed); 
+    R.fast_pool_elapsed = (PoolResult::nanoseconds)sqrt((double)R.fast_pool_elapsed); 
+    R.mono_elapsed = (PoolResult::nanoseconds)sqrt((double)R.mono_elapsed); 
+    R.local_mono_elapsed = (PoolResult::nanoseconds)sqrt((double)R.local_mono_elapsed); 
+    R.std_elapsed = (PoolResult::nanoseconds)sqrt((double)R.std_elapsed); 
+    R.tbb_elapsed = (PoolResult::nanoseconds)sqrt((double)R.tbb_elapsed); 
     return R;
 }
 
