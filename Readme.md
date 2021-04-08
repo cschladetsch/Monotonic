@@ -11,6 +11,10 @@ There are no source files - to add Monotonic functionality to your project, simp
 
 ## Building
 
+*Note* There have been some changes to boost/std that I am working on fixing in the `develop` branch.
+
+Current `master` branch will not build on 2021 machines.
+
 ### Building Boost Requirements
 
 First, build only the requirements:
