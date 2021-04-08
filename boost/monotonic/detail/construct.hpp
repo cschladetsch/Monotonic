@@ -78,12 +78,12 @@ namespace boost
             template <size_t A, size_t B>
             struct miniumum
             {
-                BOOST_STATIC_CONSTANT(size_t, value = A < B ? A : B);
+                static constexpr size_t value = A < B ? A : B;
             };
             template <size_t A, size_t B>
             struct maximum
             {
-                BOOST_STATIC_CONSTANT(size_t, value = B < A ? A : B);
+                static constexpr size_t value = B < A ? A : B;
             };
         } // namespace detail
 

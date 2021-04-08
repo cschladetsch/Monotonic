@@ -19,8 +19,8 @@
 #include <math.h>
 
 #include <boost/monotonic/containers/string.hpp>
-#include <boost/iterator.hpp>
-#include <boost/iterator/iterator_traits.hpp>
+#include <iterator>
+//#include <iterator_traits>
 
 #include "./AllocatorTypes.h"
 #include "./PoolResult.h"
@@ -56,10 +56,10 @@ void SeedRand()
 template <class Fun>
 PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
 {
-    typedef Allocator<Type::FastPool, int> fast_pool_alloc;
-    typedef Allocator<Type::Pool, int> pool_alloc;
-    typedef Allocator<Type::Monotonic, int> mono_alloc;
-    typedef Allocator<Type::Standard, int> std_alloc;
+//    typedef Allocator<Type::FastPool, int> fast_pool_alloc;
+//    typedef Allocator<Type::Pool, int> pool_alloc;
+    typedef typename Allocator<Type::Monotonic, int> mono_alloc;
+    typedef typename Allocator<Type::Standard, int> std_alloc;
 
     PoolResult result;
 
@@ -79,37 +79,37 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
     }
 #endif
 
-    if (types.Includes(Type::FastPool))
-    {
-        SeedRand();
-        boost::timer timer;
-        for (size_t n = 0; n < count; ++n)
-        {
-            {
-                fun.test(fast_pool_alloc(), length);
-            }
-            boost::singleton_pool<boost::fast_pool_allocator_tag, sizeof(int)>::release_memory();
-            boost::singleton_pool<boost::fast_pool_allocator_tag, sizeof(Unaligned)>::release_memory();
-            // CJS ?? how to release memory created by a rebind<>'d fast_pool_allocator, such as xtree::rebind ??
-        }
-        result.fast_pool_elapsed = timer.elapsed();
-    }
+//    if (types.Includes(Type::FastPool))
+//    {
+//        SeedRand();
+//        boost::timer timer;
+//        for (size_t n = 0; n < count; ++n)
+//        {
+//            {
+//                fun.test(fast_pool_alloc(), length);
+//            }
+//            boost::singleton_pool<boost::fast_pool_allocator_tag, sizeof(int)>::release_memory();
+//            boost::singleton_pool<boost::fast_pool_allocator_tag, sizeof(Unaligned)>::release_memory();
+//            // CJS ?? how to release memory created by a rebind<>'d fast_pool_allocator, such as xtree::rebind ??
+//        }
+//        result.fast_pool_elapsed = timer.elapsed();
+//    }
 
-    if (types.Includes(Type::Pool))
-    {
-        SeedRand();
-        boost::timer timer;
-        for (size_t n = 0; n < count; ++n)
-        {
-            {
-                fun.test(pool_alloc(), length);
-            }
-            boost::singleton_pool<boost::pool_allocator_tag, sizeof(int)>::release_memory();
-            boost::singleton_pool<boost::pool_allocator_tag, sizeof(Unaligned)>::release_memory();
-            // CJS ?? how to release memory created by a rebind<>'d pool_allocator, such as xtree::rebind ??
-        }
-        result.pool_elapsed = timer.elapsed();
-    }
+//    if (types.Includes(Type::Pool))
+//    {
+//        SeedRand();
+//        boost::timer timer;
+//        for (size_t n = 0; n < count; ++n)
+//        {
+//            {
+//                fun.test(pool_alloc(), length);
+//            }
+//            boost::singleton_pool<boost::pool_allocator_tag, sizeof(int)>::release_memory();
+//            boost::singleton_pool<boost::pool_allocator_tag, sizeof(Unaligned)>::release_memory();
+//            // CJS ?? how to release memory created by a rebind<>'d pool_allocator, such as xtree::rebind ??
+//        }
+//        result.pool_elapsed = timer.elapsed();
+//    }
 
     if (types.Includes(Type::Monotonic))
     {
@@ -187,7 +187,7 @@ PoolResults run_tests(
 }
 
 template <class II>
-typename boost::iterator_value<II>::type calc_mean(II first, II last, size_t num)
+typename std::iterator_value<II>::type calc_mean(II first, II last, size_t num)
 {
     return std::accumulate(first, last, typename boost::iterator_value<II>::type(0))*(1.0/num);
 }

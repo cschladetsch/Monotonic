@@ -14,7 +14,7 @@
 #include <boost/monotonic/static_storage.hpp>
 #include <boost/monotonic/detail/container.hpp>
 #include <boost/monotonic/detail/construct.hpp>
-#include <boost/type_traits/has_trivial_destructor.hpp>
+//#include <boost/type_traits/has_trivial_destructor.hpp>
 
 namespace boost
 {
@@ -36,7 +36,7 @@ namespace boost
             typedef T value_type;
             typedef detail::Construct<detail::is_monotonic<T>::value> Construct;
 
-            BOOST_STATIC_CONSTANT(size_t, alignment = boost::aligned_storage<sizeof(T)>::alignment);
+            static constexpr size_t alignment = std::aligned_storage<sizeof(T)>::alignment;
 
             storage_base *storage;
 
@@ -113,15 +113,15 @@ namespace boost
             {
                 if (!ptr)
                     return;
-                destroy(ptr, boost::has_trivial_destructor<value_type>());
+                destroy(ptr, std::is_trivially_destructible_v<value_type>());
             }
 
-            void destroy(pointer ptr, const boost::false_type& )
+            void destroy(pointer ptr, const std::false_type& )
             {
                 (*ptr).~value_type();
             }
 
-            void destroy(pointer, const boost::true_type& )
+            void destroy(pointer, const std::true_type& )
             { 
             }
 

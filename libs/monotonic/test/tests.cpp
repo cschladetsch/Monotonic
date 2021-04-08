@@ -6,10 +6,10 @@
 // documentation at https://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/doc/index.html
 // sandbox at https://svn.boost.org/svn/boost/sandbox/monotonic/
 
-#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_thread-vc142-mt-x64-1_73.lib")
-#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_date_time-vc142-mt-x64-1_73.lib")
-#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_chrono-vc142-mt-x64-1_73.lib")
-#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_unit_test_framework-vc142-mt-x64-1_73.lib")
+#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_thread-vc142-mt-x64-1_73.lib")
+#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_date_time-vc142-mt-x64-1_73.lib")
+#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_chrono-vc142-mt-x64-1_73.lib")
+#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_unit_test_framework-vc142-mt-x64-1_73.lib")
 
 #include <string>
 #include <iostream>
