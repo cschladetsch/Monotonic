@@ -27,13 +27,10 @@
 #include "./Tests.h"
 
 #ifdef WIN32
-
-//warning C4996: 'std::fill_n': Function call with parameters that may be unsafe
-#pragma warning(disable:4996)
-
-//warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-#pragma warning(disable:4267)
-
+    //warning C4996: 'std::fill_n': Function call with parameters that may be unsafe
+    #pragma warning(disable:4996)
+    //warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+    #pragma warning(disable:4267)
 #endif
 
 using namespace std;
@@ -175,7 +172,7 @@ PoolResults run_tests(
     boost::timer timer;
     for (size_t length = 10; length < max_length; length += max_length/num_iterations)
     {
-        size_t required = length;// + length*length;
+        size_t required = length;
         if (random_numbers.size() < required)
             generate_n(back_inserter(random_numbers), required - random_numbers.size(), rand);
         if (random_pairs.size() < required)
@@ -414,13 +411,13 @@ int main()
         {
 			first_result = true;
             heading("MEDIUM");
-            print(run_tests(1000, 1000, 10, "list_create<int>", test_list_create<int>()));
-            print(run_tests(1000, 1000, 10, "list_sort<int>", test_list_sort<int>()));
-            print(run_tests(10000, 1000, 10, "vector_create<int>", test_vector_create()));
-            print(run_tests(3000, 1000, 10, "vector_sort<int>", test_vector_sort<int>()));
-            print(run_tests(30000, 1000, 10, "vector_dupe", test_vector_dupe()));
-            print(run_tests(500, 1000, 10, "list_dupe", test_list_dupe(), test_dupe_list_types));
-            print(run_tests(5000, 2000, 10, "vector_accumulate", test_vector_accumulate()));
+            print(run_tests(1000, 5000, 10, "list_create<int>", test_list_create<int>()));
+            print(run_tests(1000, 5000, 10, "list_sort<int>", test_list_sort<int>()));
+            print(run_tests(10000, 5000, 10, "vector_create<int>", test_vector_create()));
+            print(run_tests(3000, 5000, 10, "vector_sort<int>", test_vector_sort<int>()));
+            print(run_tests(30000, 5000, 10, "vector_dupe", test_vector_dupe()));
+            print(run_tests(500, 5000, 10, "list_dupe", test_list_dupe(), test_dupe_list_types));
+            print(run_tests(5000, 5000, 10, "vector_accumulate", test_vector_accumulate()));
             //print(run_tests(200, 200, 5, "set_vector", test_set_vector()));
             print(run_tests(50, 1000, 10, "map_vector<int>", test_map_vector<int>()));
             heading("SUMMARY", '*');
@@ -432,15 +429,15 @@ int main()
         {
 			first_result = true;
             heading("LARGE");
-            print(run_tests(5, 25000, 10, "list_create<int>", test_list_create<int>()));
-            print(run_tests(5, 100000, 10, "list_sort<int>", test_list_sort<int>()));
-            print(run_tests(1000, 100000, 10, "vector_create<int>", test_vector_create()));
-            print(run_tests(300, 50000, 10, "vector_sort<int>", test_vector_sort<int>()));
-            print(run_tests(200, 1000000, 10, "vector_dupe", test_vector_dupe()));
-            print(run_tests(10, 10000, 10, "list_dupe", test_list_dupe(), test_dupe_list_types));
-            print(run_tests(500, 100000, 10, "vector_accumulate", test_vector_accumulate()));
+            print(run_tests(10, 25000, 10, "list_create<int>", test_list_create<int>()));
+            print(run_tests(10, 100000, 10, "list_sort<int>", test_list_sort<int>()));
+            print(run_tests(2000, 100000, 10, "vector_create<int>", test_vector_create()));
+            print(run_tests(500, 50000, 10, "vector_sort<int>", test_vector_sort<int>()));
+            print(run_tests(500, 1000000, 10, "vector_dupe", test_vector_dupe()));
+            print(run_tests(50, 10000, 10, "list_dupe", test_list_dupe(), test_dupe_list_types));
+            print(run_tests(1000, 100000, 10, "vector_accumulate", test_vector_accumulate()));
             //print(run_tests(5, 500, 5, "set_vector", test_set_vector()));
-            print(run_tests(10, 20000, 10, "map_vector<int>", test_map_vector<int>()));
+            print(run_tests(20, 20000, 10, "map_vector<int>", test_map_vector<int>()));
         }
 
         heading("FINAL SUMMARY", '*');
