@@ -8,7 +8,6 @@
 
 #include <algorithm>
 #include <array>
-#include <boost/foreach.hpp>
 #include <boost/monotonic/detail/prefix.hpp>
 #include <boost/monotonic/fixed_storage.hpp>
 #include <boost/monotonic/detail/pool.hpp>
@@ -27,9 +26,9 @@ namespace boost
         template <size_t InlineSize, size_t MinHeapIncrement, class Alloc>
         struct storage : storage_base
         {
-            BOOST_STATIC_CONSTANT(size_t, NumPools = 8);
-            BOOST_STATIC_CONSTANT(size_t, ChunkShift = 4);
-            BOOST_STATIC_CONSTANT(size_t, ChunkSize = 1 << ChunkShift);
+            static constexpr size_t NumPools = 8;
+            static constexpr size_t ChunkShift = 4;
+            static constexpr size_t ChunkSize = 1 << ChunkShift;
 
             typedef storage<InlineSize, MinHeapIncrement, Alloc> This;
             typedef Alloc Allocator;
@@ -40,7 +39,7 @@ namespace boost
             // allocations are always made from the stack, or from a pool the first link in the chain
             // typedef std::vector<Link, Alloc> Chain;                    
             typedef std::vector<Link, LinkAllocator> Chain;                    
-            typedef boost::array<Pool, NumPools> Pools;
+            typedef std::array<Pool, NumPools> Pools;
             typedef fixed_storage<InlineSize> FixedStorage;    // the inline fixed-sized storage which may be on the stack
 
         private:
@@ -78,11 +77,11 @@ namespace boost
             void reset()
             {
                 fixed.reset();
-                BOOST_FOREACH(Pool&pool, pools)
+                for (Pool &pool : pools)
                 {
                     pool.reset();
                 }
-                BOOST_FOREACH(Link &link, chain)
+                for (Link &link : chain)
                 {
                     link.reset();
                 }
@@ -91,7 +90,7 @@ namespace boost
             void release()
             {
                 reset();
-                BOOST_FOREACH(Link &link, chain)
+                for (Link &link : chain)
                 {
                     link.release();
                 }
@@ -176,7 +175,7 @@ namespace boost
             size_t heap_used() const
             {
                 size_t count = 0;
-                BOOST_FOREACH(Link const &link, chain)
+                for (Link const &link : chain)
                     count += link.used();
                 return count;
             }
@@ -200,13 +199,13 @@ namespace boost
             }
 
             template <class Ty>
-            void construct(Ty *ptr, const boost::true_type& /*is_pod*/)
+            void construct(Ty *ptr, const std::true_type& /*is_pod*/)
             {
                 // do nothing
             }
 
             template <class Ty>
-            void construct(Ty *ptr, const boost::false_type&)
+            void construct(Ty *ptr, const std::false_type&)
             {
                 new (ptr) Ty();
             }
@@ -215,7 +214,7 @@ namespace boost
             Ty &create()
             {
                 Ty *ptr = uninitialised_create<Ty>();
-                construct(ptr, boost::is_pod<Ty>());
+                construct(ptr, std::is_pod<Ty>());
                 return *ptr;
             }
 

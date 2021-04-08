@@ -3,11 +3,10 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_MONOTONIC_CONTAINER_HPP
-#define BOOST_MONOTONIC_CONTAINER_HPP
+#pragma once
 
 #include <boost/monotonic/detail/prefix.hpp>
-#include <boost/type_traits/is_convertible.hpp>
+#include <type_traits>
 
 //#include <boost/monotonic/allocator.hpp>
 
@@ -23,10 +22,10 @@ namespace boost
             struct container;
 
             template <class T>
-            struct is_monotonic : mpl::bool_<is_convertible<T *, container_base *>::value> { };
+            struct is_monotonic : std::is_convertible<T *, container_base *> { };
             
             template <class Impl>
-            struct is_monotonic<container<Impl> > : mpl::true_ { };
+            struct is_monotonic<container<Impl> > : std::true_type { };
 
             template <class Impl>
             struct container : container_base
@@ -48,7 +47,5 @@ namespace boost
 }
 
 #include <boost/monotonic/detail/postfix.hpp>
-
-#endif // BOOST_MONOTONIC_CONTAINER_HPP
 
 //EOF

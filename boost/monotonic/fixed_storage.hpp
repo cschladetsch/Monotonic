@@ -7,12 +7,12 @@
 #define BOOST_MONOTONIC_FIXED_STORAGE_HPP
 
 #include <boost/monotonic/detail/prefix.hpp>
-#include <boost/assert.hpp>
-#include <boost/array.hpp>
+//#include <boost/assert.hpp>
+#include <array>
 #include <boost/monotonic/forward_declarations.hpp>
 #include <boost/monotonic/exceptions.hpp>
 #include <boost/monotonic/storage_base.hpp>
-#include <boost/type_traits/is_unsigned.hpp>
+#include <type_traits>
 
 //#define BOOST_MONOTONIC_STORAGE_EARLY_OUT
 
@@ -24,7 +24,7 @@ namespace boost
         template <size_t InlineSize>
         struct fixed_storage : storage_base
         {
-            typedef boost::array<char, InlineSize> Buffer;
+            typedef std::array<char, InlineSize> Buffer;
 
         private:
             Buffer buffer;            ///< the storage
@@ -88,7 +88,7 @@ namespace boost
             }
 
             // testing performance against a fixed-size alignment
-            BOOST_STATIC_CONSTANT(size_t, alignment = 64);
+            //BOOST_STATIC_CONSTANT(size_t, alignment = 64);
 
             struct AllocationAttempt
             {
@@ -181,13 +181,13 @@ namespace boost
             }
 
             template <class Ty>
-            void construct(Ty *ptr, const boost::true_type& /*is_pod*/)
+            void construct(Ty *ptr, const std::true_type& /*is_pod*/)
             {
                 // do nothing
             }
 
             template <class Ty>
-            void construct(Ty *ptr, const boost::false_type&)
+            void construct(Ty *ptr, const std::false_type&)
             {
                 new (ptr) Ty();
             }

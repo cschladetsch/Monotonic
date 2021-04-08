@@ -9,8 +9,8 @@
 #pragma once
 
 #include <memory>
-#include <boost/pool/object_pool.hpp>
-#include <boost/pool/pool_alloc.hpp>
+//#include <boost/pool/object_pool.hpp>
+//#include <boost/pool/pool_alloc.hpp>
 #undef max
 #undef min
 #include <boost/monotonic/allocator.hpp>
@@ -26,8 +26,8 @@ struct Type
     {
         None = 0,
         Standard = 1,
-        FastPool = 2,
-        Pool = 4,
+        //FastPool = 2,
+        //Pool = 4,
         Monotonic = 8,
         Tbb = 16,
         Google = 32,
@@ -51,15 +51,15 @@ struct Allocator;
 template <class Ty>
 struct Allocator<Type::Standard, Ty> : std::allocator<Ty> { };
 
-template <class Ty>
-struct Allocator<Type::FastPool, Ty> : boost::fast_pool_allocator<Ty
-    , boost::default_user_allocator_new_delete
-    , boost::details::pool::null_mutex> { };
-
-template <class Ty>
-struct Allocator<Type::Pool, Ty> : boost::pool_allocator<Ty
-    , boost::default_user_allocator_new_delete
-    , boost::details::pool::null_mutex> { };
+//template <class Ty>
+//struct Allocator<Type::FastPool, Ty> : boost::fast_pool_allocator<Ty
+//    , boost::default_user_allocator_new_delete
+//    , boost::details::pool::null_mutex> { };
+//
+//template <class Ty>
+//struct Allocator<Type::Pool, Ty> : boost::pool_allocator<Ty
+//    , boost::default_user_allocator_new_delete
+//    , boost::details::pool::null_mutex> { };
 
 template <class Ty>
 struct Allocator<Type::Monotonic, Ty> : boost::monotonic::allocator<Ty> { };
@@ -90,4 +90,3 @@ inline bool operator<(Unaligned const &A, Unaligned const &B)
     return A.c[2] < B.c[2];
 }
 
-//EOF

@@ -19,8 +19,8 @@
 #include <math.h>
 
 #include <boost/monotonic/containers/string.hpp>
-#include <boost/iterator.hpp>
-#include <boost/iterator/iterator_traits.hpp>
+#include <iterator>
+#include <boost/timer/timer.hpp>
 
 #include "./AllocatorTypes.h"
 #include "./PoolResult.h"
@@ -53,10 +53,10 @@ void SeedRand()
 template <class Fun>
 PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
 {
-    typedef Allocator<Type::FastPool, int> fast_pool_alloc;
-    typedef Allocator<Type::Pool, int> pool_alloc;
-    typedef Allocator<Type::Monotonic, int> mono_alloc;
-    typedef Allocator<Type::Standard, int> std_alloc;
+//    typedef Allocator<Type::FastPool, int> fast_pool_alloc;
+//    typedef Allocator<Type::Pool, int> pool_alloc;
+    typedef typename Allocator<Type::Monotonic, int> mono_alloc;
+    typedef typename Allocator<Type::Standard, int> std_alloc;
 
     PoolResult result;
 
@@ -76,42 +76,42 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
     }
 #endif
 
-    if (types.Includes(Type::FastPool))
-    {
-        SeedRand();
-        boost::timer timer;
-        for (size_t n = 0; n < count; ++n)
-        {
-            {
-                fun.test(fast_pool_alloc(), length);
-            }
-            boost::singleton_pool<boost::fast_pool_allocator_tag, sizeof(int)>::release_memory();
-            boost::singleton_pool<boost::fast_pool_allocator_tag, sizeof(Unaligned)>::release_memory();
-            // CJS ?? how to release memory created by a rebind<>'d fast_pool_allocator, such as xtree::rebind ??
-        }
-        result.fast_pool_elapsed = timer.elapsed();
-    }
+//    if (types.Includes(Type::FastPool))
+//    {
+//        SeedRand();
+//        boost::timer timer;
+//        for (size_t n = 0; n < count; ++n)
+//        {
+//            {
+//                fun.test(fast_pool_alloc(), length);
+//            }
+//            boost::singleton_pool<boost::fast_pool_allocator_tag, sizeof(int)>::release_memory();
+//            boost::singleton_pool<boost::fast_pool_allocator_tag, sizeof(Unaligned)>::release_memory();
+//            // CJS ?? how to release memory created by a rebind<>'d fast_pool_allocator, such as xtree::rebind ??
+//        }
+//        result.fast_pool_elapsed = timer.elapsed();
+//    }
 
-    if (types.Includes(Type::Pool))
-    {
-        SeedRand();
-        boost::timer timer;
-        for (size_t n = 0; n < count; ++n)
-        {
-            {
-                fun.test(pool_alloc(), length);
-            }
-            boost::singleton_pool<boost::pool_allocator_tag, sizeof(int)>::release_memory();
-            boost::singleton_pool<boost::pool_allocator_tag, sizeof(Unaligned)>::release_memory();
-            // CJS ?? how to release memory created by a rebind<>'d pool_allocator, such as xtree::rebind ??
-        }
-        result.pool_elapsed = timer.elapsed();
-    }
+//    if (types.Includes(Type::Pool))
+//    {
+//        SeedRand();
+//        boost::timer timer;
+//        for (size_t n = 0; n < count; ++n)
+//        {
+//            {
+//                fun.test(pool_alloc(), length);
+//            }
+//            boost::singleton_pool<boost::pool_allocator_tag, sizeof(int)>::release_memory();
+//            boost::singleton_pool<boost::pool_allocator_tag, sizeof(Unaligned)>::release_memory();
+//            // CJS ?? how to release memory created by a rebind<>'d pool_allocator, such as xtree::rebind ??
+//        }
+//        result.pool_elapsed = timer.elapsed();
+//    }
 
     if (types.Includes(Type::Monotonic))
     {
         SeedRand();
-        boost::timer timer;
+        boost::timer::auto_cpu_timer timer;
         for (size_t n = 0; n < count; ++n)
         {
             {
@@ -119,7 +119,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
             }
             boost::monotonic::reset_storage();
         }
-        result.mono_elapsed = timer.elapsed();
+        result.mono_elapsed = elapsed_s(timer);
     }
 
 	// do it again for local storage if testing monotonic
@@ -127,7 +127,7 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
     {
         SeedRand();
         monotonic::local<my_local> storage;
-        boost::timer timer;
+        boost::timer::auto_cpu_timer timer;
         for (size_t n = 0; n < count; ++n)
         {
             {
@@ -135,20 +135,20 @@ PoolResult run_test(size_t count, size_t length, Fun fun, Type types)
             }
             storage.reset();
         }
-        result.local_mono_elapsed = timer.elapsed();
+        result.local_mono_elapsed = elapsed_s(timer);
     }
 
     if (types.Includes(Type::Standard))
     {
         SeedRand();
-        boost::timer timer;
+        boost::timer::auto_cpu_timer timer;
         for (size_t n = 0; n < count; ++n)
         {
             {
                 fun.test(std_alloc(), length);
             }
         }
-        result.std_elapsed = timer.elapsed();
+        result.std_elapsed = elapsed_s(timer);
     }
 
     cout << "." << flush;
@@ -163,13 +163,13 @@ std::pair<int, int> random_pair()
 template <class Fun>
 PoolResults run_tests(
     size_t count, size_t max_length, size_t num_iterations, const char *title, Fun fun, 
-    Type types = Type::Standard | Type::Pool | Type::FastPool | Type::Monotonic | Type::Tbb
+    Type types = Type::Standard | Type::Monotonic | Type::Tbb
     )
 {
     cout << title << ": reps=" << count << ", len=" << max_length << ", steps=" << num_iterations << endl;
     PoolResults results;
     SeedRand();
-    boost::timer timer;
+    boost::timer::auto_cpu_timer timer;
     for (size_t length = 10; length < max_length; length += max_length/num_iterations)
     {
         size_t required = length;
@@ -179,18 +179,18 @@ PoolResults run_tests(
             generate_n(back_inserter(random_pairs), required - random_pairs.size(), random_pair);
         results[length] = run_test(count, length, fun, types);
     }
-    cout << endl << "took " << timer.elapsed() << "s" << endl;
+    cout << endl << "took " << elapsed_s(timer) << "s" << endl;
     return results;
 }
 
 template <class II>
-typename boost::iterator_value<II>::type calc_mean(II first, II last, size_t num)
+typename std::iterator_traits<II>::value_type calc_mean(II first, II last, size_t num)
 {
-    return std::accumulate(first, last, typename boost::iterator_value<II>::type(0))*(1.0/num);
+    return std::accumulate(first, last, typename std::iterator_traits<II>::value_type(0))*(1.0/num);
 }
 
 template <class II>
-typename boost::iterator_value<II>::type calc_mean(II first, II last)
+typename std::iterator_traits<II>::value_type calc_mean(II first, II last)
 {
     if (first == last)
         throw std::range_error("calc_mean");
@@ -198,9 +198,9 @@ typename boost::iterator_value<II>::type calc_mean(II first, II last)
 }
 
 template <class II>
-std::pair<typename boost::iterator_value<II>::type,typename boost::iterator_value<II>::type> standard_deviation_mean(II first, II last)
+std::pair<typename std::iterator_traits<II>::value_type, typename std::iterator_traits<II>::value_type> standard_deviation_mean(II first, II last)
 {
-    typedef typename boost::iterator_value<II>::type Value;
+    typedef typename std::iterator_traits<II>::value_type Value;
     size_t length = std::distance(first, last);
     if (length == 0)
         return std::make_pair(Value(0), Value(0));
@@ -220,7 +220,7 @@ std::pair<typename boost::iterator_value<II>::type,typename boost::iterator_valu
 template <class Cont>
 std::pair<typename Cont::value_type, typename Cont::value_type> standard_deviation_mean(Cont const &cont)
 {
-    return standard_deviation_mean(boost::begin(cont), boost::end(cont));
+    return standard_deviation_mean(std::begin(cont), std::end(cont));
 }
 
 void print_cumulative(std::vector<PoolResult> const &results)
@@ -350,24 +350,40 @@ void test_locals_std()
     }
 }
 
+boost::timer::nanosecond_type elapsed_ns(boost::timer::auto_cpu_timer const& timer)
+{
+    auto const &elapsed = timer.elapsed();
+    return elapsed.system + elapsed.user;
+}
+
+boost::timer::nanosecond_type elapsed_ms(boost::timer::auto_cpu_timer const& timer)
+{
+    return (boost::timer::nanosecond_type)(elapsed_ns(timer) / 1000.);
+}
+
+boost::timer::nanosecond_type elapsed_s(boost::timer::auto_cpu_timer const& timer)
+{
+    return (boost::timer::nanosecond_type)((elapsed_ms(timer)) / 1000.);
+}
+
 void test_locals(size_t count)
 {
-    boost::timer t0;
+    boost::timer::auto_cpu_timer t0;
     for (size_t n = 0; n < count; ++n)
     {
         test_locals_mono();
     }
+    auto mono_elapsed = t0.elapsed();
 
-    double mono_elapsed = t0.elapsed();
-    boost::timer t1;
+    boost::timer::auto_cpu_timer t1;
     for (size_t n = 0; n < count; ++n)
     {
         test_locals_std();
     }
+    auto std_elapsed = t1.elapsed();
 
-    double std_elapsed = t1.elapsed();
-    cout << "mono: " << mono_elapsed << endl;
-    cout << "std : " << std_elapsed << endl;
+    cout << "mono: " << elapsed_ms(t0) / 1000. << "ms" << endl;
+    cout << "std: " << elapsed_ms(t1) / 1000. << "ms" << endl;
 }
 
 int main()
@@ -377,7 +393,7 @@ int main()
         cout << "results of running test at:" << endl;
         cout << "https://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/test/Tests.h" << endl << endl;
 
-        boost::timer timer;
+        boost::timer::auto_cpu_timer timer;
         Type test_map_vector_types;
         Type test_dupe_list_types;
 
@@ -442,7 +458,7 @@ int main()
 
         heading("FINAL SUMMARY", '*');
         print_cumulative(cumulative);
-        cout << endl << "took " << setprecision(3) << timer.elapsed()/60. << " minutes" << endl;
+        cout << endl << "took " << setprecision(3) << elapsed_s(timer)/60. << " minutes" << endl;
     }
     catch (std::exception &e)
     {

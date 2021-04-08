@@ -8,17 +8,15 @@
 
 #pragma once
 
-#include <boost/timer.hpp>
-
 struct PoolResult 
 {
-    //boost::array<double, Type:: elapsed[;
     double pool_elapsed;
     double fast_pool_elapsed;
     double mono_elapsed;
     double local_mono_elapsed;
     double std_elapsed;
     double tbb_elapsed;
+
     PoolResult(double D = 0)
     {
         tbb_elapsed = pool_elapsed = fast_pool_elapsed = mono_elapsed = local_mono_elapsed = std_elapsed = D;
@@ -34,6 +32,7 @@ struct PoolResult
         tbb_elapsed += A.tbb_elapsed;
         return *this;
     }
+
     PoolResult& operator-=(PoolResult const &A)
     {
         pool_elapsed -= A.pool_elapsed;
@@ -44,6 +43,7 @@ struct PoolResult
         tbb_elapsed -= A.tbb_elapsed;
         return *this;
     }
+
     PoolResult& operator*=(PoolResult const &A)
     {
         pool_elapsed *= A.pool_elapsed;
@@ -54,6 +54,7 @@ struct PoolResult
         tbb_elapsed *= A.tbb_elapsed;
         return *this;
     }
+
     PoolResult& operator*=(double A)
     {
         pool_elapsed *= A;
@@ -119,6 +120,3 @@ inline PoolResult operator-(PoolResult const &A, PoolResult const &B)
 }
 
 typedef std::map<size_t /*count*/, PoolResult> PoolResults;
-
-
-//EOF
