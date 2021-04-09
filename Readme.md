@@ -40,19 +40,19 @@ Tried and tested on Win7, Win8, Win10, Ubuntu and macOS.
 
 See all comparative results, going back to 2009, [here](/libs/monotonic/test/results).
 
-These are the latest results as of November 2020.
+These are the latest results as of April 2021.
 
 All numbers are normalised by the time taken for Monotonic, so a number < 0 means faster, a number > 0 means slower by that factor.
 
 ```
 *******************************************************
-                FINAL SUMMARY
+		FINAL SUMMARY
 *******************************************************
     scheme      mean   std-dev       min       max
-      fast   14.0359   49.7442         0   357.667
-      pool   36.5891   22687.1         1      1225
-       std   4.56216   4.24972       0.5         9
+      fast      30.2       119         0  1.04e+03
+      pool        75  6.39e+04         1  2.38e+03
+       std       3.6      3.04       0.5        11
 ```
 
-See the [comparison code](/libs/monotonic/test/compare_memory_pool.cpp) and the latest [results](/libs/monotonic/test/results/2020).
+See the [comparison code](/libs/monotonic/test/compare_memory_pool.cpp) and the latest [results](/libs/monotonic/test/results/2021).
 
