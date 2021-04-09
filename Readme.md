@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/github/license/cschladetsch/monotonic.svg?label=License&maxAge=86400)](./LICENSE.txt)
 [![Release](https://img.shields.io/github/release/cschladetsch/monotonic.svg?label=Release&maxAge=60)](https://github.com/cschladetsch/monotonic/releases/latest)
 
-A boost library propsal: **Fastest C++ Allocator**. See original [boost documentation](https://htmlpreview.github.io/?ttps://github.com/cschladetsch/Monotonic/blob/develop/libs/monotonic/doc/html/index.html) and original [code with documentation here](https://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/doc/html/index.html).
+A boost library propsal: **Fastest C++ Allocator**. See original [boost documentation](https://htmlpreview.github.io/?https://github.com/cschladetsch/Monotonic/blob/develop/libs/monotonic/doc/html/index.html) and original [code with documentation here](https://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/doc/html/index.html).
 
 This library provides the fastest way to manage memory in a C++ application. Yes, that is a bold claim. See the [exhaustive results]( http://github.com/cschladetsch/Monotonic/tree/master/libs/monotonic/test/results/). 
 
