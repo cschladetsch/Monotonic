@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <array>
+#include <type_traits>
 #include <boost/monotonic/detail/prefix.hpp>
 #include <boost/monotonic/fixed_storage.hpp>
 #include <boost/monotonic/detail/pool.hpp>
@@ -249,7 +250,7 @@ namespace boost
             template <size_t N>
             char *allocate_bytes()
             {
-                return allocate_bytes(N, boost::aligned_storage<N>::alignment);
+                return allocate_bytes(N, 64);// std::aligned_storage<N>::);
             }
 
             char *allocate_bytes(size_t num_bytes, size_t alignment = 1)

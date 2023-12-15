@@ -127,12 +127,12 @@ namespace boost
                 };
             };
 
-            /// an element of a given type on the stack
-            template <class T>
-            struct element 
-                : impl::element<T, boost::is_pod<T>::value>
-            {
-            };
+            ///// an element of a given type on the stack
+            //template <class T>
+            //struct element 
+            //    : impl::element<T, boost::is_pod<T>>::value
+            //{
+            //};
 
             element_base *previous;
 
@@ -240,14 +240,15 @@ namespace boost
                 return iterator(0);
             }
 
-            template <class T>
-            T &push()
-            {
-                element<T> &elem = push_element<T>();
-                if (!is_pod<T>::value)
-                    new (elem.get_pointer()) T();
-                return *elem.get_pointer();
-            }
+            // CJS TODO
+            //template <class T>
+            //T &push()
+            //{
+            //    element<T> &elem = push_element<T>();
+            //    if (!is_pod<T>::value)
+            //        new (elem.get_pointer()) T();
+            //    return *elem.get_pointer();
+            //}
 
             template <class T, class A0>
             T &push(A0 a0)
@@ -266,9 +267,9 @@ namespace boost
             }
 
             template <class T, size_t N>
-            array<T, N> &push_array()
+            std::array<T, N> &push_array()
             {
-                return push<array<T, N> >();
+                return push<std::array<T, N> >();
             }
 
             void pop()
@@ -338,11 +339,13 @@ namespace boost
             {
                 return 0;
             }
-            template <class T>
-            T &push()
-            {
-                return fixed.push<T>();
-            }
+
+            // CJS TODO
+            //template <class T>
+            //T &push()
+            //{
+            //    return fixed.push<T>();
+            //}
         };
     
     } // namespace monotonic

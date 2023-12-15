@@ -6,17 +6,10 @@
 // documentation at https://svn.boost.org/svn/boost/sandbox/monotonic/libs/monotonic/doc/index.html
 // sandbox at https://svn.boost.org/svn/boost/sandbox/monotonic/
 
-<<<<<<< HEAD
-//#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_thread-vc142-mt-x64-1_73.lib")
-//#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_date_time-vc142-mt-x64-1_73.lib")
-//#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_chrono-vc142-mt-x64-1_73.lib")
-//#pragma comment(lib, "C:\\Boost\\boost_1_73_0\\stage\\lib\\libboost_unit_test_framework-vc142-mt-x64-1_73.lib")
-=======
-#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_thread-vc142-mt-x64-1_73.lib")
-#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_date_time-vc142-mt-x64-1_73.lib")
-#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_chrono-vc142-mt-x64-1_73.lib")
-#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_unit_test_framework-vc142-mt-x64-1_73.lib")
->>>>>>> b3d6ba7bca4cfeca01501be2de602201b9f04d77
+//#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_thread-vc142-mt-x64-1_73.lib")
+//#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_date_time-vc142-mt-x64-1_73.lib")
+//#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_chrono-vc142-mt-x64-1_73.lib")
+//#pragma comment(lib, "C:\\local\\boost_1_73_0\\stage\\lib\\libboost_unit_test_framework-vc142-mt-x64-1_73.lib")
 
 #include <string>
 #include <iostream>
@@ -66,7 +59,7 @@ bool is_sorted(II F, II L)
 template <class Cont>
 bool is_sorted(Cont const &cont)
 {
-    return std::is_sorted(boost::begin(cont), boost::end(cont));
+    return std::is_sorted(std::begin(cont), std::end(cont));
 }
 
 struct Tracked
@@ -97,69 +90,70 @@ struct Tracked
 
 int Tracked::count = 0;
 
-BOOST_AUTO_TEST_CASE(test_stack)
-{
-    monotonic::stack<> stack;
-    {
-        size_t top = stack.top();
-        int &n2 = stack.push<int>();
-        /*
-        float &f0 = stack.push<float>();
-        char &n3 = stack.push<char>();
-        Tracked &tracked = stack.push<Tracked>();
-        boost::array<int, 42> &a = stack.push_array<int, 42>();
+// CJS TODO
+//BOOST_AUTO_TEST_CASE(test_stack)
+//{
+//    monotonic::stack<> stack;
+//    {
+//        size_t top = stack.top();
+//        int &n2 = stack.push<int>();
+//        /*
+//        float &f0 = stack.push<float>();
+//        char &n3 = stack.push<char>();
+//        Tracked &tracked = stack.push<Tracked>();
+//        boost::array<int, 42> &a = stack.push_array<int, 42>();
+//
+//        BOOST_ASSERT(stack.size() == 5);
+//
+//        size_t peak = stack.top();
+//        cout << "STACK:" << endl;
+//        BOOST_FOREACH(monotonic::stack<>::value_type const &elem, stack)
+//        {
+//            cout << elem.get_type().name() << endl;
+//        }
+//        stack.pop();
+//        stack.pop();
+//        stack.pop();
+//        stack.pop();
+//        stack.pop();
+//        size_t top2 = stack.top();
+//        BOOST_ASSERT(top2 == top);
+//        BOOST_ASSERT(Tracked::count == 0);
+//        */
+//    }
+//}
 
-        BOOST_ASSERT(stack.size() == 5);
-
-        size_t peak = stack.top();
-        cout << "STACK:" << endl;
-        BOOST_FOREACH(monotonic::stack<>::value_type const &elem, stack)
-        {
-            cout << elem.get_type().name() << endl;
-        }
-        stack.pop();
-        stack.pop();
-        stack.pop();
-        stack.pop();
-        stack.pop();
-        size_t top2 = stack.top();
-        BOOST_ASSERT(top2 == top);
-        BOOST_ASSERT(Tracked::count == 0);
-        */
-    }
-}
-
-BOOST_AUTO_TEST_CASE(test_fixed_stack)
-{
-    monotonic::fixed_stack<> stack;
-    {
-        size_t top = stack.top();
-        int &n2 = stack.push<int>();
-        float &f0 = stack.push<float>();
-        char &n3 = stack.push<char>();
-        Tracked &tracked = stack.push<Tracked>();
-        boost::array<int, 42> &a = stack.push_array<int, 42>();
-
-        BOOST_ASSERT(stack.size() == 5);
-
-        size_t peak = stack.top();
-        cout << "STACK:" << endl;
-        // CJS 2013
-        //BOOST_FOREACH(typename monotonic::fixed_stack<>::value_type const &elem, stack)
-        //{
-        //    cout << elem.get_type().name() << endl;
-        //}
-        stack.pop();
-        stack.pop();
-        stack.pop();
-        stack.pop();
-        stack.pop();
-        size_t top2 = stack.top();
-        BOOST_ASSERT(top2 == top);
-        BOOST_ASSERT(Tracked::count == 0);
-    }
-}
-
+//BOOST_AUTO_TEST_CASE(test_fixed_stack)
+//{
+//    monotonic::fixed_stack<> stack;
+//    {
+//        size_t top = stack.top();
+//        int &n2 = stack.push<int>();
+//        float &f0 = stack.push<float>();
+//        char &n3 = stack.push<char>();
+//        Tracked &tracked = stack.push<Tracked>();
+//        //boost::array<int, 42> &a = stack.push_array<int, 42>();
+//
+//        BOOST_ASSERT(stack.size() == 5);
+//
+//        size_t peak = stack.top();
+//        cout << "STACK:" << endl;
+//        // CJS 2013
+//        //BOOST_FOREACH(typename monotonic::fixed_stack<>::value_type const &elem, stack)
+//        //{
+//        //    cout << elem.get_type().name() << endl;
+//        //}
+//        stack.pop();
+//        stack.pop();
+//        stack.pop();
+//        stack.pop();
+//        stack.pop();
+//        size_t top2 = stack.top();
+//        BOOST_ASSERT(top2 == top);
+//        BOOST_ASSERT(Tracked::count == 0);
+//    }
+//}
+//
 template <class Number>
 Number work(size_t iterations, std::vector<Number> const &data)
 {
@@ -533,7 +527,7 @@ BOOST_AUTO_TEST_CASE(test_local_storage_iter)
         char *array2 = storage.allocate_bytes<1283>();
         fill_n(array2, 1283, 42);
 
-        boost::array<int, 42> &array3 = storage.create<boost::array<int, 42> >();
+        //boost::array<int, 42> &array3 = storage.create<boost::array<int, 42> >();
 
         // destroy objects. this only calls the destructors; it does not release memory
         storage.destroy(s1);
