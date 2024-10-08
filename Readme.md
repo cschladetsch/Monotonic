@@ -29,7 +29,7 @@ $ sudo apt-get intall libdev-boost-filesystem libdev-boost-chrono libdev-boost-r
 
 Then build the test and performance harnesses:
 ```bash
-$ mkdir -p build && cmake .. && make
+$ mkdir -p build && cd build && cmake .. && make
 ```
 
 ## Testing
