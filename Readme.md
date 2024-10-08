@@ -19,12 +19,12 @@ From Command line
 
 ##### Windows
 ```
-b2 address-model=64 link=static threading=multi runtime-link=shared build-dir=build\x86 install --prefix="c:\lib\boost\" filesystem chrono regex threading
+$ b2 address-model=64 link=static threading=multi runtime-link=shared build-dir=build\x86 install --prefix="c:\lib\boost\" filesystem chrono regex threading
 ```
 
 ##### Ubuntu
 ```
-# sudo apt-get intall libdev-boost-filesystem libdev-boost-chrono libdev-boost-regex
+$ sudo apt-get intall libdev-boost-filesystem libdev-boost-chrono libdev-boost-regex
 ```
 
 Then build the test and performance harnesses:
